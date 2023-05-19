@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <title>Adulis | Ethiopian Ecommerce Website</title>
+  <link href="">
 </head>
 
 <body>
@@ -60,7 +61,9 @@
     </div>
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Phone and Tablets &nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">Phone & Tablets &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=first"><i
+            class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
       </p>
 
       <div class="swiper mySwipersec items-slider">
@@ -181,7 +184,9 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">TV & Monitors &nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">TV & Monitors &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=second"><i
+            class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
       </p>
 
       <div class="swiper mySwipersec items-slider">
@@ -301,8 +306,9 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Desktop & Laptop Computers &nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right"
-          aria-hidden="true"></i>
+      <p class="sec-title">Desktop & Laptop Computers &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=third"><i
+            class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
       </p>
 
       <div class="swiper mySwipersec items-slider">
@@ -422,7 +428,9 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Accessories &nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">Accessories &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=fourth"><i
+            class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
       </p>
 
       <div class="swiper mySwipersec items-slider">
@@ -542,7 +550,9 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Shoes &nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">Shoes &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=fifth"><i class="fa fa-arrow-right"
+            aria-hidden="true"></i>
+        </a>
       </p>
 
       <div class="swiper mySwipersec items-slider">
@@ -662,7 +672,9 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Books &nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">Books &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=sixth"><i class="fa fa-arrow-right"
+            aria-hidden="true"></i>
+        </a>
       </p>
 
       <div class="swiper mySwipersec items-slider">
@@ -782,7 +794,9 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Personal Care & Beauty&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">Personal Care & Beauty&nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=seventh"><i
+            class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
       </p>
 
       <div class="swiper mySwipersec items-slider">
@@ -924,11 +938,11 @@
         <p class="footer-title">Contact Us</p>
         <ul>
           <li><a href="tel:"><i class="fa fa-mobile" aria-hidden="true"></i>
-            &nbsp;&nbsp;+251 911 121314</a></li>
-          <li><a href=mailto:"><i class="fa fa-envelope" aria-hidden="true"></i>
-            &nbsp;&nbsp;contact@adulis.com</a></li>
+              &nbsp;&nbsp;+251 911 121314</a></li>
+          <li><a href="mailto:"><i class="fa fa-envelope" aria-hidden="true"></i>
+              &nbsp;&nbsp;contact@adulis.com</a></li>
           <li><a href="" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>
-            &nbsp;&nbsp;Around Addis Ababa</a></li>
+              &nbsp;&nbsp;Around Addis Ababa</a></li>
         </ul>
       </div>
     </div>

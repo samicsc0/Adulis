@@ -1,0 +1,539 @@
+@font-face {
+    font-family: 'century';
+    src: url(../Assets/fonts/Century\ Gothic.ttf);
+}
+
+@font-face {
+    font-family: 'ft';
+    src: url(../Assets/fonts/BebasNeue-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fff;
+    font-family: century;
+    overflow-x: hidden;
+}
+
+/* Style for the header page*/
+.header {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 5%;
+    background-color: #fff;
+}
+
+.header .options {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    padding: 40px 0;
+}
+
+.header a {
+    font-family: ft;
+    font-weight: lighter;
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #000000d2;
+}
+
+.header img {
+    width: 90px;
+}
+
+.header .search-bar {
+    height: 24px;
+}
+
+.header .search-btn {
+    padding: 1.5px 5px;
+    height: 100%;
+    background-color: #013D29;
+    color: #fff;
+}
+
+#searchbox {
+    height: 100%;
+    width: 12vw;
+    border-radius: 5px 0 0 5px;
+}
+
+.header .search-bar {
+    display: flex;
+}
+
+/*Style for the main section*/
+main {
+    width: 90%;
+    margin: auto;
+}
+
+/* Style for the swiper section*/
+
+.banner {
+    margin-top: 150px;
+    height: 40vh;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+}
+
+/* style for home page listings */
+
+.list-sec {
+    margin: 40px 0px;
+}
+
+.sec-title {
+    font-family: century;
+    margin: 30px 0;
+    font-size: 1.2rem;
+}
+
+/*Style for each listing item */
+.item-desc {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item-desc .item-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.item-desc .desc-sec {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-desc .desc-sec .row-1 {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 0 0;
+}
+
+.item-desc .row-1 .title,
+.item-desc .row-1 .price {
+    font-weight: bolder;
+    font-size: 18px;
+}
+
+.item-desc .row-2 .desc,
+.item-desc .row-2 .rating {
+    color: #00000093;
+}
+
+.item-desc .desc-sec .row-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-desc .row-2 .btn-addcart {
+    color: #000;
+    text-decoration: none;
+    border: 1px black solid;
+    width: 150px;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.item-desc .row-2 .btn-addcart:hover {
+    background-color: #013D29;
+    color: #fff;
+}
+
+.checked {
+    color: #0BAB0A;
+}
+
+/* Style for the footer*/
+footer {
+    margin-top: 100px;
+    padding: 50px 0;
+    background-color: #013D29;
+}
+
+footer .foot-container {
+    display: flex;
+    gap: 50px;
+    width: 90%;
+    margin: auto;
+}
+
+footer .col {
+    width: 40%;
+}
+
+footer .footer-title {
+    color: #fff;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+footer .footer-desc {
+    color: #ffffff78;
+    line-height: 25px;
+}
+
+footer ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+footer ul li {
+    list-style-type: none;
+}
+
+footer ul a {
+    text-decoration: none;
+    color: #ffffff78;
+}
+
+footer ul a:hover {
+    color: #fff;
+}
+
+/*Style for the listing page*/
+.list-container-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+/*Style for the registration page*/
+.reg-container {
+    display: flex;
+    margin: auto;
+}
+
+.reg-container .col-1 {
+    width: 55%;
+}
+
+.reg-container .col-2 {
+    width: 45%;
+    height: 100vh;
+    background-image: url(../Assets/img/vecteezy_girl-putting-up-sign-for-plan-schedule_.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+.reg-container .reg-title {
+    font-size: 3rem;
+    margin-top: 30px;
+    font-weight: 200;
+}
+
+.reg-container .reg-subtitle {
+    color: #000000a6;
+}
+
+.reg-container form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.reg-container input {
+    width: 60%;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-bottom: 1px black solid;
+    border-radius: 5px;
+}
+
+.reg-container .submit {
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+}
+
+.locatme {
+    color: #000000a6;
+}
+
+.reg-container .submit:hover {
+    cursor: pointer;
+    letter-spacing: 2px;
+}
+
+.reg-container .additional-options {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #00000096;
+}
+
+/* Style for login page */
+.login-container {
+    width: 60%;
+    margin: 80px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #00000002;
+    gap: 20px;
+    padding: 50px 0px;
+    border-radius: 20px;
+}
+
+.login-container img {
+    width: 120px;
+    height: auto;
+}
+
+.login-container .login-title {
+    font-size: 1.7rem;
+}
+
+.login-container input {
+    height: 40px;
+    outline: none;
+    border: none;
+    border-bottom: 1px black solid;
+    border-radius: 5px;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+}
+
+.login-container .submit {
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+}
+
+.login-container .submit:hover {
+    cursor: pointer;
+    letter-spacing: 2px;
+}
+
+.login-container .additional-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #00000096;
+}
+
+/*Style for reset password page*/
+.reset-container {
+    margin: 100px auto;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.reset-container img {
+    width: 60px;
+    height: auto;
+}
+
+.reset-container .reset-title {
+    font-size: 1.6rem;
+}
+
+.reset-container .reset-sub {
+    font-size: 0.8rem;
+    color: #00000090;
+}
+
+.reset-container form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 20px;
+}
+
+.reset-container form input {
+    width: 80%;
+    margin: auto;
+    height: 40px;
+    gap: 10px;
+    outline: none;
+    border: none;
+    border-bottom: 1px black solid;
+    border-radius: 5px;
+}
+
+.reset-container .submit {
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+}
+
+.reset-container .submit:hover {
+    cursor: pointer;
+    letter-spacing: 2px;
+}
+
+/*Style for the profile page */
+.pro-container .profile-title {
+    font-size: 1.6rem;
+}
+
+.pro-container .horizontal-ruler {
+    height: 1px;
+    width: 100%;
+    background-color: #00000015;
+}
+
+.pro-container .pro-wrapper {
+    display: flex;
+    gap: 40px;
+}
+
+.pro-container .pro-wrapper .col-1 {
+    width: 20%;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pro-container .pro-wrapper .col-2 {
+    padding: 30px 0;
+    width: 70%;
+    height: 80vh;
+}
+
+.pro-container .pro-wrapper .col-1 a {
+    text-decoration: none;
+    color: #000000ca;
+    padding: 5px 2px;
+}
+
+.pro-container .pro-wrapper .col-1 .selected {
+    color: #000;
+    background-color: #00000027;
+}
+
+/*Style for the categories page*/
+.cat-container .cat-title {
+    margin: 120px 0 40px 0;
+    font-size: 1.8rem;
+}
+.cat-container .cat-wrapper{
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+}
+.cat-container .cat-detail{
+    display: flex;
+    gap: 20px;
+    border: 0.5px solid #000;
+    border-radius: 10px;
+}
+.cat-container .cat-detail .product-cat{
+    align-self: center;
+}
+.cat-container .cat-detail:hover{
+    background-color: #D9D9D9;
+    cursor: pointer;
+}
+.cat-container .cat-detail img{
+    width: 70px;
+    height: auto;
+    border-top-left-radius: 10px; 
+    border-bottom-left-radius: 10px; 
+}
+
+/*Style for the detail page*/
+.detailpg-container {
+    margin-top: 150px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.detailpg-container .col-1 {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.detailpg-container .col-2 {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.detailpg-container .col-1 .row-1 img {
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+}
+
+.detailpg-container .col-1 .row-2 {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.detailpg-container .col-1 .row-2 img {
+    width: 50px;
+    height: auto;
+    object-fit: cover;
+}
+
+.detailpg-container .col-2 .row-1 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detailpg-container .col-2 .row-1 .product-name,
+.detailpg-container .col-2 .row-1 .product-price {
+    font-size: 1.8rem;
+}
+
+.detailpg-container .col-2 li {
+    line-height: calc(3 * 0.7rem);
+}
+
+.detailpg-container .btn-addcart {
+    color: #000;
+    text-decoration: none;
+    border: 1px black solid;
+    width: 150px;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 20px;
+}
+.detailpg-container .btn-addcart:hover{
+    background-color: #013D29;
+    color: #fff;
+}
+/*Style for the cart page*/
+.cart-container .cart-title {
+    margin: 120px 0 40px 0;
+    font-size: 1.8rem;
+}
