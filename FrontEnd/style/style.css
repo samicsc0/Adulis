@@ -593,3 +593,54 @@ footer ul a:hover {
     background-color: #013D29;
     color: #fff;
 }
+/* Style for checkout page */
+.checkout-container .checkout-title{
+    margin: 120px 0 40px 0;
+    font-size: 1.8rem;
+}
+.checkout-container .checkout-wrapper{
+    margin-left: 15%;
+    display: flex;
+    gap: 100px;
+}
+.checkout-container .col{
+    border: 1px #00000021 solid;
+    border-radius: 10px;
+    padding: 40px;
+}
+.checkout-container .col-2 .row-1{
+    display: flex;
+    gap: 100px;
+}
+.checkout-container .col-1 p{
+    line-height: calc(2 * 1rem);
+}
+.checkout-container .col-2{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.checkout-container .title{
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+.checkout-container .detail{
+    color: #00000050;
+}
+.checkout-container .checkout-wrapper .col-1 span{
+    color:#000;
+}
+.checkout-container .pay-btn{
+    color: #000;
+    text-decoration: none;
+    border: 1px black solid;
+    width: 150px;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 20px;
+}
+.checkout-container .pay-btn:hover{
+    background-color: #013D29;
+    color: #fff;
+}
