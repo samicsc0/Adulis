@@ -680,3 +680,40 @@ footer ul a:hover {
     flex-direction: column;
     gap: 20px;
 }
+/* New Password */
+.new-password{
+    width: 60%;
+    margin:100px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.new-password .pass-title{
+    font-size: 1.4rem;
+    margin: 10px 0;
+}
+.new-password form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 20px;
+}
+.new-password .pass-title{
+    margin: 20px 0px;
+}
+.new-password form input{
+    height: 40px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;  
+    border-radius: 5px;  
+    padding-left: 10px;
+}
+.new-password form input[type='submit']{
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+}
+.new-password img{
+    width: 100px;
+}
