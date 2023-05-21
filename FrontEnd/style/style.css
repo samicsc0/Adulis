@@ -644,3 +644,39 @@ footer ul a:hover {
     background-color: #013D29;
     color: #fff;
 }
+/* Contact Page*/
+.contact-container .contact-title{
+    margin: 120px 0 40px 0;
+    font-size: 1.8rem;
+}
+.contact-container form{
+    width: 40%;
+}
+.contact-container form input{
+    height: 45px;
+    border: none;
+    border-bottom: 1px solid #000;
+    border-radius: 5px;
+    outline: none;
+    padding-left: 20px;
+}
+.contact-container form input[type='submit']{
+    border: none;
+    background-color: #fff;
+    text-align: left;
+    border: 1px solid #000;
+    width: 40%;
+    cursor:pointer;
+}
+.contact-container form input[type='submit']:hover{
+    background-color: #013D29;
+    color: #fff;
+}
+.contact-container form input::placeholder{
+    padding: 100px;
+}
+.contact-container .contact-wrapper form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
