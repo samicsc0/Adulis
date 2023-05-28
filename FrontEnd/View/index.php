@@ -948,6 +948,10 @@
     </div>
   </footer>
   <script>
+
+
+    /* Swiper js for the home page slide show */
+
     var swiper = new Swiper(".mySwiper", {
       autoplay: {
         delay: 3000,
@@ -957,6 +961,8 @@
         el: ".swiper-pagination",
       },
     });
+
+    /* Swiper for featured items*/
     var secswiper = new new Swiper(".mySwipersec", {
       slidesPerView: 3,
       spaceBetween: 30,

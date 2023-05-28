@@ -396,6 +396,9 @@ footer ul a:hover {
 }
 
 /*Style for the profile page */
+.pro-container{
+    margin-top: 120px;
+}
 .pro-container .profile-title {
     font-size: 1.6rem;
 }
@@ -421,14 +424,70 @@ footer ul a:hover {
 
 .pro-container .pro-wrapper .col-2 {
     padding: 30px 0;
-    width: 70%;
+    width: 80%;
     height: 80vh;
 }
+.pro-container .hist-row{
 
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0px;
+    border-bottom: 1px solid #0000005a;
+    margin-bottom: 10px;
+}
+.pro-container .edit-profile{
+    display: none;
+}
+.pro-container .edit-profile form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    gap: 10px;
+} 
+.pro-container .edit-profile form input{
+    height: 40px;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;
+    border-radius: 5px;
+}
+.pro-container .edit-profile form input[type='submit']{
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+    cursor: pointer;
+}
+.pro-container .password{
+    display: none;
+}
+.pro-container .password form input[type='submit']{
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+    cursor: pointer;
+}
+.pro-container .password form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    gap: 10px;
+}
+.pro-container .password form input{
+    height: 40px;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;
+    border-radius: 5px;
+}
 .pro-container .pro-wrapper .col-1 a {
     text-decoration: none;
     color: #000000ca;
     padding: 5px 2px;
+    cursor: pointer;
 }
 
 .pro-container .pro-wrapper .col-1 .selected {
@@ -722,6 +781,13 @@ footer ul a:hover {
     margin: 120px 0 40px 0;
     font-size: 1.8rem;
 }
+.search-container .sort-choice{
+    margin-bottom: 30px;
+}
+.search-container .sort-choice form{
+    display: flex;
+    justify-content: space-between;
+}
 .search-container .search-result{
     display: flex;
     justify-content: space-between;
@@ -732,4 +798,273 @@ footer ul a:hover {
 }
 .search-container .search-result img{
     width: 80px;
+}
+
+/*Business Registration Style */
+.licencebiz{
+    color: #000000a6;;
+}
+/*Business Managment Page*/
+.business-man-header{
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 5%;
+    border-bottom: 1px solid #0000001a;
+    font-size: 1.2rem;
+}
+.business-man-header .business_name{
+    color: #000;
+}
+.business-man-header a{
+    text-decoration: none;
+    color: #000;
+}
+.business-man-container{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 50px 0;
+}
+.business-man-container .menu-sec{
+    width: 24%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.business-man-container .menu-sec .menu-item{
+    padding: 10px 5px;
+    cursor: pointer;
+}
+.business-man-container .opt-container{
+    width: 76%;
+}
+.business-man-container .opt-container .opt{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}
+.business-man-container .active{
+color: #000;
+background-color: #00000027;
+}
+.business-man-container .item{
+    display: flex;
+    flex-direction: column;
+    /* width: 280px; */
+    gap: 10px;
+    border-radius: 5px;
+    border: 1px solid #0000005a;
+}
+.business-man-container .item .item-name, .business-man-container .item .stock,.business-man-container .item .edit{
+    padding: 0% 2%;
+}
+.business-man-container .item img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+.business-man-container .item .lower{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    padding-bottom: 10px;
+}
+
+/* Add Item */
+.add-item{
+    display: none;
+}
+.business-man-container {
+    display: flex;
+}
+.business-man-container .add-item .title{
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.add-item form input{
+    height: 30px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;
+    border-radius: 5px;
+    padding-left: 5px;
+}
+.add-item form{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.add-item form .row-1{
+    display: flex;
+    gap: 100px;
+}
+.add-item .row-2{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.add-item form .sub-row-1{
+    display: flex;
+    gap: 20px;
+}
+.add-item .row-3{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.add-item input[type="submit"]{
+    width: 250px;
+    height: 40px;
+    border: none;
+    color: #fff;
+    background-color: #0BAB0A;
+    text-align: left;
+    padding-left: 10px;
+    cursor: pointer;
+}
+/* Style for the statistics */
+
+.business-man-container .stats{
+    display: none;
+}
+
+.stats-wrapper{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 50px;
+}
+
+.stat{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #0000004d;
+    padding: 20px 0;
+    border-radius: 20px;
+}
+.stats .stat .first{
+    font-size: 2rem;
+}
+
+/* Style for the the edit profile*/
+.business-man-container .profile{
+    display: none;
+}
+.business-man-container .profile .profile-wrapper form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    gap: 10px;
+}
+.business-man-container .profile .profile-wrapper form input{
+    height: 40px;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;
+    border-radius: 5px;
+}
+.business-man-container .profile .profile-wrapper form input[type='submit']{
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+    cursor: pointer;
+}
+/*Style for the reset password */
+.business-man-container .password{
+    display: none;
+}
+.business-man-container .password-wrapper form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    gap: 10px;
+}
+.business-man-container .password-wrapper input{
+    height: 40px;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;
+    border-radius: 5px;
+}
+.business-man-container .password-wrapper input[type="submit"]{
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+    cursor: pointer;
+}
+/* Update Products Page */
+.update-product-head{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    justify-content: center;
+}
+.update-product-head a{
+    text-decoration: none;
+    color: #000;
+}
+hr{
+    color:#0000003d;
+}
+.update-product-head{
+    display: flex;
+}
+.update-product-container{
+    margin: 50px 0px;
+    display: flex;
+    gap: 20px;
+}
+.update-product-container .col-1{
+    width: 40%;
+}
+.update-product-container .col-1 img{
+    height: 70vh;
+    width: 100%;
+    object-fit: cover;
+    
+}
+.update-product-container .col-2{
+    width: 60%;
+}
+.update-product-container .col-2 .row-1{
+    display: flex;
+    justify-content: space-between;
+}
+.update-product-container .col-2 .row-1 a{
+    text-decoration: none;
+    color: red;
+    font-size: 24px;
+}
+.update-product-container .col-2 form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.update-product-container input{
+    height: 40px;
+    width: 250px;
+    padding: 0px 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #00000025;
+    border-radius: 5px;
+}
+.update-product-container input[type="submit"]{
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+    cursor: pointer;
+    text-align: left;
 }
