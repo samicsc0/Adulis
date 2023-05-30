@@ -99,7 +99,7 @@ main {
 
 .sec-title {
     font-family: century;
-    margin: 30px 0;
+    margin: 150px 0 30px 0;
     font-size: 1.2rem;
 }
 
@@ -848,6 +848,27 @@ footer ul a:hover {
 color: #000;
 background-color: #00000027;
 }
+/*Style for new orders */
+.new-order .order-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+.new-order .orderd_item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px #00000025 solid;
+}
+.new-order img{
+    width: 80px;
+}
+
+/*Style for the item list*/
+.opt-container .opt-co{
+    display: none;
+}
 .business-man-container .item{
     display: flex;
     flex-direction: column;
@@ -1062,6 +1083,52 @@ hr{
     border-radius: 5px;
 }
 .update-product-container input[type="submit"]{
+    border: none;
+    background-color: #0BAB0A;
+    color: #fff;
+    cursor: pointer;
+    text-align: left;
+}
+
+/* Style for the Admin Page*/
+.business-man-container .opt-container .seller{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #00000025;
+}
+.business-man-container .buyer-man{
+    display: none;
+}
+.business-man-container .deactive:hover{
+    color: red;
+}
+.business-man-container .deactive{
+    cursor: pointer;
+}
+.business-man-container .delivery{
+    display: none;
+}
+.business-man-container .delivery .delivery-form{
+    width: 40%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.business-man-container .delivery .delivery-form .update-price{
+    align-self: center;
+}
+.business-man-container .delivery-form input{
+    height: 40px;
+    padding: 0px 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #00000025;
+    border-radius: 5px;
+}
+.delivery-form input[type="submit"]{
     border: none;
     background-color: #0BAB0A;
     color: #fff;

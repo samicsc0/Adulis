@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <title>Business Managment </title>
+</head>
+
+<body>
+    <header class="business-man-header">
+        <p class="business_name">Admin Control Panel</p>
+    </header>
+    <main>
+        <div class="business-man-container">
+            <div class="menu-sec">
+                <a class="menu-item active" id="seller-btn" onclick="select('seller-btn','opt-2')"><i
+                        class="fa fa-user-tie" aria-hidden="true"></i>
+                    &nbsp; Sellers</a>
+                <a class="menu-item" id="buyer-btn" onclick="select('buyer-btn','opt-3')"><i
+                        class="fa fa-shopping-basket" aria-hidden="true"></i> &nbsp; Buyers</a>
+                <a class="menu-item" id="delivery-btn" onclick="select('delivery-btn','opt-1')"><i
+                        class="fa fa-shipping-fast" aria-hidden="true"></i> &nbsp; Delivery Price</a>
+                <a class="menu-item" id="stat-btn" onclick="select('stat-btn','opt-4')"><i class="fa fa-bar-chart"
+                        aria-hidden="true"></i> &nbsp; Stats</a>
+                <a class="menu-item" id="edit-btn" onclick="select('edit-btn','opt-5')"><i class="fa fa-user"
+                        aria-hidden="true"></i> &nbsp; Edit Profile</a>
+                <a class="menu-item" id="pss-btn" onclick="select('pss-btn','opt-6')"><i class="fa fa-key"
+                        aria-hidden="true"></i>&nbsp; Change Password</a>
+                <a class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
+            </div>
+            <div class="opt-container">
+                <!-- First Option -->
+                <div class="seller-man" id="opt-2">
+                    <div class="seller-wrapper">
+                        <div class="seller">
+                            <p class="biz_name">kaldi's Coffe</p>
+                            <p class="full_name">Samuel Zewde</p>
+                            <p class="phno">+251944263239</p>
+                            <p class="location">Bethel Square</p>
+                            <p class="deactive">Deactivate Account</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Second Option -->
+                <div class="buyer-man" id="opt-3">
+                    <div class="buyer-wrapper">
+                        <div class="seller">
+                            <p class="full_name">Samuel Zewde</p>
+                            <p class="phno">+251944263239</p>
+                            <p class="location">Bethel Square</p>
+                            <p class="deactive">Deactivate Account</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Third Option -->
+                <div class="stats" id="opt-4">
+                    <div class="stats-wrapper">
+                        <div class="stat">
+                            <p class="first">300</p>
+                            <p class="second">Today's Sales</p>
+                        </div>
+                        <div class="stat">
+                            <p class="first">300</p>
+                            <p class="second">Today's Transactions</p>
+                        </div>
+                        <div class="stat">
+                            <p class="first">300</p>
+                            <p class="second">Total Transaction</p>
+                        </div>
+                        <div class="stat">
+                            <p class="first">300</p>
+                            <p class="second">Number of Buyers</p>
+                        </div>
+                        <div class="stat">
+                            <p class="first">300</p>
+                            <p class="second">Number of Sellers</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fourth Option-->
+                <div class="profile" id="opt-5">
+                    <div class="profile-wrapper">
+                        <form action="">
+                            <input type="text" name="" id="" placeholder="First Name" required>
+                            <input type="text" name="" id="" placeholder="Last Name" required>
+                            <input type="text" name="" id="" placeholder="Business Name" required>
+                            <input type="email" name="" id="" placeholder="Email" required>
+                            <input type="number" name="" id="" placeholder="Phone Number" required>
+                            <input type="text" name="" id="" placeholder="Address">
+                            <a href="">Locate Me</a>
+                            <input type="submit" value="Update">
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Fifth Option-->
+
+                <div class="password" id="opt-6">
+                    <div class="password-wrapper">
+                        <form action="">
+                            <input type="password" name="" id="" placeholder="Old Password">
+                            <input type="password" name="" id="" placeholder="New Password">
+                            <input type="password" name="" id="" placeholder="Confirm Password">
+                            <input type="submit" value="Update">
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Sixth Option-->
+                <div class="delivery" id="opt-1">
+                    <form action="" class="delivery-form">
+                        <p class="update-price">Update Delivery Price</p>
+                        <input type="number" name="" id="" placeholder="Delivery Price">
+                        <input type="submit" value="Update">
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </main>
+    <script>
+        function disableAll() {
+            document.getElementById('opt-1').style.display = 'none';
+            document.getElementById('opt-2').style.display = 'none';
+            document.getElementById('opt-3').style.display = 'none';
+            document.getElementById('opt-4').style.display = 'none';
+            document.getElementById('opt-5').style.display = 'none';
+            document.getElementById('opt-6').style.display = 'none';
+            document.getElementById('delivery-btn').style.backgroundColor = "white";
+            document.getElementById('seller-btn').style.backgroundColor = "white";
+            document.getElementById('buyer-btn').style.backgroundColor = "white";
+            document.getElementById('stat-btn').style.backgroundColor = "white";
+            document.getElementById('edit-btn').style.backgroundColor = "white";
+            document.getElementById('pss-btn').style.backgroundColor = "white";
+        }
+        function select(opt, targ) {
+            disableAll();
+            document.getElementById(targ).style.display = "block";
+            document.getElementById(opt).style.backgroundColor = "#00000027";
+        }
+    </script>
+</body>
+
+</html>

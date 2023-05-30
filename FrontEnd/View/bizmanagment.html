@@ -17,22 +17,34 @@
     <main>
         <div class="business-man-container">
             <div class="menu-sec">
-                <a class="menu-item active" id="list-btn" onclick="select('list-btn','opt-1')"><i class="fa fa-book"
+                <a class="menu-item active" id="order-btn"  onclick="select('order-btn','opt-1')"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; New Orders</a>
+                <a class="menu-item" id="list-btn" onclick="select('list-btn','opt-2')"><i class="fa fa-book"
                         aria-hidden="true"></i> &nbsp; Items List</a>
-                <a class="menu-item" id="add-btn" onclick="select('add-btn','opt-2')"><i class="fa fa-pencil-square"
+                <a class="menu-item" id="add-btn" onclick="select('add-btn','opt-3')"><i class="fa fa-pencil-square"
                         aria-hidden="true"></i> &nbsp; Add Item</a>
-                <a class="menu-item" id="stat-btn" onclick="select('stat-btn','opt-3')"><i class="fa fa-bar-chart"
+                <a class="menu-item" id="stat-btn" onclick="select('stat-btn','opt-4')"><i class="fa fa-bar-chart"
                         aria-hidden="true"></i> &nbsp; Stats</a>
-                <a class="menu-item" id="edit-btn" onclick="select('edit-btn','opt-4')"><i class="fa fa-user"
+                <a class="menu-item" id="edit-btn" onclick="select('edit-btn','opt-5')"><i class="fa fa-user"
                         aria-hidden="true"></i> &nbsp; Edit Profile</a>
-                <a class="menu-item" id="pss-btn" onclick="select('pss-btn','opt-5')"><i class="fa fa-key"
+                <a class="menu-item" id="pss-btn" onclick="select('pss-btn','opt-6')"><i class="fa fa-key"
                         aria-hidden="true"></i>&nbsp; Change Password</a>
                 <a class="menu-item"> <i class="fa-solid fa-walkie-talkie"></i> &nbsp; Contact Adminstrator</a>
                 <a class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
             </div>
             <div class="opt-container">
                 <!-- First Option-->
-                <div class="opt-co" id="opt-1">
+                <div class="new-order" id="opt-1">
+                    <div class="order-wrapper">
+                        <div class="orderd_item">
+                            <img src="../Assets/img/iph.jpg" alt="">
+                            <p class="product-name">iPhone 14 pro</p>
+                            <p class="price">1000 Birr</p>
+                            <p class="mark">Mark as Delivered</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Second Option-->
+                <div class="opt-co" id="opt-2">
                     <div class="opt">
                         <div class="item">
                             <img src="../Assets/img/iph.jpg" alt="">
@@ -70,7 +82,7 @@
                 </div>
 
                 <!-- Second Option-->
-                <div class="add-item" id="opt-2">
+                <div class="add-item" id="opt-3">
                     <div class="add-item-container">
                         <p class="title">Add Product</p>
                         <form action="" method="post">
@@ -109,7 +121,7 @@
                 </div>
 
                 <!-- Third Option -->
-                <div class="stats" id="opt-3">
+                <div class="stats" id="opt-4">
                     <div class="stats-wrapper">
                         <div class="stat">
                             <p class="first">300</p>
@@ -138,7 +150,7 @@
                     </div>
                 </div>
                 <!-- Fourth Option-->
-                <div class="profile" id="opt-4">
+                <div class="profile" id="opt-5">
                     <div class="profile-wrapper">
                         <form action="">
                             <input type="text" name="" id="" placeholder="First Name" required>
@@ -153,7 +165,7 @@
                     </div>
                 </div>
 
-                <div class="password" id="opt-5">
+                <div class="password" id="opt-6">
                     <div class="password-wrapper">
                         <form action="">
                             <input type="password" name="" id="" placeholder="Old Password">
@@ -175,6 +187,8 @@
             document.getElementById('opt-3').style.display = 'none';
             document.getElementById('opt-4').style.display = 'none';
             document.getElementById('opt-5').style.display = 'none';
+            document.getElementById('opt-6').style.display = 'none';
+            document.getElementById('order-btn').style.backgroundColor = "white";
             document.getElementById('list-btn').style.backgroundColor = "white";
             document.getElementById('add-btn').style.backgroundColor = "white";
             document.getElementById('stat-btn').style.backgroundColor = "white";
