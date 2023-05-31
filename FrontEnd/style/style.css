@@ -99,7 +99,7 @@ main {
 
 .sec-title {
     font-family: century;
-    margin: 150px 0 30px 0;
+    margin: 30px 0;
     font-size: 1.2rem;
 }
 
@@ -218,6 +218,11 @@ footer ul a:hover {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 40px;
+}
+.list-title{
+    font-family: century;
+    margin: 150px 0px 30px 0px;
+    font-size: 1.2rem;
 }
 
 /*Style for the registration page*/
@@ -1134,4 +1139,26 @@ hr{
     color: #fff;
     cursor: pointer;
     text-align: left;
+}
+.business-man-container .enquires{
+    display: none;
+}
+.business-man-container .enquires-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.business-man-container .enquiry{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #00000015;
+}
+.business-man-container .enquiry .row-1{
+    display: flex;
+    justify-content: space-between;
+}
+.business-man-container .enquiry .row-2 .message{
+    color: #0000006a;
 }

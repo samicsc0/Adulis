@@ -8,6 +8,36 @@
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <title>Business Managment </title>
+    <script>
+        function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+        }
+        function handleScreenSizeChange() {
+            var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            var screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+            if (screenWidth <= 768) {
+                blockMobileDevices();
+            } else {
+                location.reload();
+            }
+        }
+
+        window.addEventListener('resize', handleScreenSizeChange);
+
+
+        function blockMobileDevices() {
+            if (isMobileDevice() || window.innerWidth <= 768) {
+                document.body.innerHTML = '';
+                document.write('Sorry, this page is not available on mobile devices.');
+                document.close();
+            }
+        }
+
+        // Call the blockMobileDevices function when the page loads
+        window.onload = blockMobileDevices;
+        window.onresize = handleScreenSizeChange;
+
+    </script>
 </head>
 
 <body>
@@ -26,6 +56,8 @@
                         class="fa fa-shipping-fast" aria-hidden="true"></i> &nbsp; Delivery Price</a>
                 <a class="menu-item" id="stat-btn" onclick="select('stat-btn','opt-4')"><i class="fa fa-bar-chart"
                         aria-hidden="true"></i> &nbsp; Stats</a>
+                <a class="menu-item" id="message-btn" onclick="select('message-btn','opt-7')"><i class="fa fa-comments"
+                        aria-hidden="true"></i> &nbsp; Inquiries</a>
                 <a class="menu-item" id="edit-btn" onclick="select('edit-btn','opt-5')"><i class="fa fa-user"
                         aria-hidden="true"></i> &nbsp; Edit Profile</a>
                 <a class="menu-item" id="pss-btn" onclick="select('pss-btn','opt-6')"><i class="fa fa-key"
@@ -33,7 +65,7 @@
                 <a class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
             </div>
             <div class="opt-container">
-                <!-- First Option -->
+                <!-- Second Option -->
                 <div class="seller-man" id="opt-2">
                     <div class="seller-wrapper">
                         <div class="seller">
@@ -45,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Second Option -->
+                <!-- Third Option -->
                 <div class="buyer-man" id="opt-3">
                     <div class="buyer-wrapper">
                         <div class="seller">
@@ -56,7 +88,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Third Option -->
+                <!-- Fourth Option -->
                 <div class="stats" id="opt-4">
                     <div class="stats-wrapper">
                         <div class="stat">
@@ -65,7 +97,7 @@
                         </div>
                         <div class="stat">
                             <p class="first">300</p>
-                            <p class="second">Today's Transactions</p>
+                            <p class="second">Today's Revenue</p>
                         </div>
                         <div class="stat">
                             <p class="first">300</p>
@@ -81,7 +113,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Fourth Option-->
+                <!-- Fifth Option-->
                 <div class="profile" id="opt-5">
                     <div class="profile-wrapper">
                         <form action="">
@@ -97,7 +129,7 @@
                     </div>
                 </div>
 
-                <!-- Fifth Option-->
+                <!-- Sixth Option-->
 
                 <div class="password" id="opt-6">
                     <div class="password-wrapper">
@@ -110,7 +142,28 @@
                     </div>
                 </div>
 
-                <!-- Sixth Option-->
+                <!-- Sevent Option-->
+                <div class="enquires" id="opt-7">
+                    <div class="enquires-wrapper">
+                        <div class="enquiry">
+                            <div class="row-1">
+                                <p class="email-account">samuelzewde29@gmail.com</p>
+                                <p class="user-type">Buyer</p>
+                                <p class="time">5/30/2023</p>
+                                <p class="markasread">Mark as Read</p>
+                            </div>
+                            <div class="row-2">
+                                <p class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam,
+                                    dolorum placeat eligendi quam soluta dolores nemo voluptatum laudantium, libero aut
+                                    inventore possimus alias eos blanditiis obcaecati cum harum fugiat. Nam, illo
+                                    perferendis.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- First Option-->
                 <div class="delivery" id="opt-1">
                     <form action="" class="delivery-form">
                         <p class="update-price">Update Delivery Price</p>
@@ -131,10 +184,12 @@
             document.getElementById('opt-4').style.display = 'none';
             document.getElementById('opt-5').style.display = 'none';
             document.getElementById('opt-6').style.display = 'none';
+            document.getElementById('opt-7').style.display = 'none';
             document.getElementById('delivery-btn').style.backgroundColor = "white";
             document.getElementById('seller-btn').style.backgroundColor = "white";
             document.getElementById('buyer-btn').style.backgroundColor = "white";
             document.getElementById('stat-btn').style.backgroundColor = "white";
+            document.getElementById('message-btn').style.backgroundColor = "white";
             document.getElementById('edit-btn').style.backgroundColor = "white";
             document.getElementById('pss-btn').style.backgroundColor = "white";
         }

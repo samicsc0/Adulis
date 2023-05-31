@@ -63,7 +63,7 @@
                 break;
         }
         ?>
-        <p class="sec-title"><?=$listing; ?> &nbsp;&nbsp;&nbsp;
+        <p class="list-title"><?=$listing; ?> &nbsp;&nbsp;&nbsp;
         </p>
 
 
