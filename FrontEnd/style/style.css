@@ -1162,3 +1162,38 @@ hr{
 .business-man-container .enquiry .row-2 .message{
     color: #0000006a;
 }
+.business-man-container .newsell{
+    display: none;
+}
+/* Style for the seller information page */
+.detail-info-container{
+    width: 70%;
+    margin: 100px auto;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    border: 1px solid #00000015;
+    padding:30px 0;
+}
+.detail-info-container .info{
+    display: inline;
+    margin: auto;
+}
+.detail-info-container .action-btns{
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+.detail-info-container .action-btns a{
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+.detail-info-container .action-btns .activate{
+    background-color: #0BAB0A;
+}
+.detail-info-container .action-btns .deactive{
+    background-color: red;
+}

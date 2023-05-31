@@ -50,6 +50,9 @@
                 <a class="menu-item active" id="seller-btn" onclick="select('seller-btn','opt-2')"><i
                         class="fa fa-user-tie" aria-hidden="true"></i>
                     &nbsp; Sellers</a>
+                <a class="menu-item" id="newseller-btn" onclick="select('newseller-btn','opt-8')"><i
+                        class="fa fa-store" aria-hidden="true"></i>
+                    &nbsp; New Sellers</a>
                 <a class="menu-item" id="buyer-btn" onclick="select('buyer-btn','opt-3')"><i
                         class="fa fa-shopping-basket" aria-hidden="true"></i> &nbsp; Buyers</a>
                 <a class="menu-item" id="delivery-btn" onclick="select('delivery-btn','opt-1')"><i
@@ -163,6 +166,19 @@
 
                 </div>
 
+                <!-- Eigth Option-->
+                <div class="newsell" id="opt-8">
+                    <div class="seller-wrapper">
+                        <div class="seller">
+                            <p class="biz_name">kaldi's Coffe</p>
+                            <p class="full_name">Samuel Zewde</p>
+                            <p class="phno">+251944263239</p>
+                            <p class="location">Bethel Square</p>
+                            <p class="deactive">Activate Account</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- First Option-->
                 <div class="delivery" id="opt-1">
                     <form action="" class="delivery-form">
@@ -185,7 +201,9 @@
             document.getElementById('opt-5').style.display = 'none';
             document.getElementById('opt-6').style.display = 'none';
             document.getElementById('opt-7').style.display = 'none';
+            document.getElementById('opt-8').style.display = 'none';
             document.getElementById('delivery-btn').style.backgroundColor = "white";
+            document.getElementById('newseller-btn').style.backgroundColor = "white";
             document.getElementById('seller-btn').style.backgroundColor = "white";
             document.getElementById('buyer-btn').style.backgroundColor = "white";
             document.getElementById('stat-btn').style.backgroundColor = "white";
