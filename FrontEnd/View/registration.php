@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
+    <!-- <link rel="stylesheet" href="../../BackEnd/User.php"> -->
     <title>Adulis Registration</title>
 </head>
 
@@ -16,7 +17,7 @@
                 <p class="reg-title">Sign Up</p>
                 <p class="reg-subtitle">Shop Smart, Save Time, Discover Endless Possibilities</p>
                 <div class="signup-container">
-                    <form action="" method="post">
+                    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
                         <input type="text" name="fname" id="fname" placeholder="First Name" required>
                         <input type="text" name="lname" id="lname" placeholder="Last Name" required>
                         <input type="tel" name="phonenumber" id="phonenumber" placeholder="Phone Number" required>
@@ -24,8 +25,30 @@
                         <input type="text" name="address" id="address" placeholder="Address" required>
                         <a href="" class="locatme">locate me</a>
                         <input type="password" name="password" id="password" placeholder="Password" required>
-                        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
-                        <input type="submit" value="Sign Up &#8594" class="submit">
+                        <input type="password" name="confirm_password" id="confirm_password"
+                            placeholder="Confirm Password" required>
+                        <input type="submit" name="submit" value="Sign Up &#8594" class="submit">
+                        <?php
+                        require_once 'inputcleaner.php';
+                        require '../../BackEnd/User.php';
+                        if (isset($_POST['submit'])) {
+                            $firstname = input_cleaner($_POST['fname']);
+                            $lastname = input_cleaner($_POST['lname']);
+                            $phnumber = input_cleaner($_POST['phonenumber']);
+                            $email = input_cleaner($_POST['email']);
+                            $address = input_cleaner($_POST['address']);
+                            $password = $_POST['password'];
+                            $conpassword = $_POST['confirm_password'];
+                            if ($password != $conpassword) {
+                                echo "Password Don't Match!";
+                            } else {
+                                $password = hash("sha256", $password);
+                                $user = new User($firstname, $lastname, $phnumber, $email, $address, $password);
+                                $user->register();
+                            }
+                        }
+
+                        ?>
                     </form>
                     <div class="additional-options">
                         <p>Already have an account?&nbsp;&nbsp;<a href="http://">Sign in</a></p>
@@ -33,7 +56,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col col-2"></div>
+            <div class="col col-2">
+
+            </div>
 
         </div>
         </div>
@@ -74,6 +99,11 @@
             </div>
         </div>
     </footer>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
 </body>
 
 </html>

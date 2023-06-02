@@ -16,10 +16,10 @@
                 <p class="reg-title">Sign Up</p>
                 <p class="reg-subtitle">Shop Smart, Save Time, Discover Endless Possibilities</p>
                 <div class="signup-container">
-                    <form action="" method="post">
+                    <form action="" method="POST">
                         <input type="text" name="fname" id="fname" placeholder="First Name" required>
                         <input type="text" name="lname" id="lname" placeholder="Last Name" required>
-                        <input type="text" name="lname" id="lname" placeholder="Business Name" required>
+                        <input type="text" name="biz_name" id="lname" placeholder="Business Name" required>
                         <input type="tel" name="phonenumber" id="phonenumber" placeholder="Phone Number" required>
                         <input type="email" name="email" id="email" placeholder="E-mail" required>
                         <input type="text" name="address" id="address" placeholder="Address" required>
@@ -27,7 +27,28 @@
                         <input type="password" name="password" id="password" placeholder="Password" required>
                         <input type="password" name="confirm_password" id="confirm_password"
                             placeholder="Confirm Password" required>
-                        <input type="submit" value="Sign Up &#8594" class="submit">
+                        <input type="submit" name="submit" value="Sign Up &#8594" class="submit">
+                        <?php
+                        require_once 'inputcleaner.php';
+                        require '../../BackEnd/Seller.php';
+                        if (isset($_POST['submit'])) {
+                            $firstname = input_cleaner($_POST['fname']);
+                            $lastname = input_cleaner($_POST['lname']);
+                            $biz_name = input_cleaner($_POST['biz_name']);
+                            $phnumber = input_cleaner($_POST['phonenumber']);
+                            $email = input_cleaner($_POST['email']);
+                            $address = input_cleaner($_POST['address']);
+                            $password = $_POST['password'];
+                            $conpassword = $_POST['confirm_password'];
+                            if ($password != $conpassword) {
+                                echo "Password Don't Match!";
+                            } else {
+                                $password = hash("sha256", $password);
+                                $user = new Seller($firstname, $lastname, $phnumber, $email, $address, $password,$biz_name);
+                                $user->register();
+                            }
+                        }
+                        ?>
                     </form>
                     <div class="additional-options">
                         <p>Already have an account?&nbsp;&nbsp;<a href="http://">Sign in</a></p>

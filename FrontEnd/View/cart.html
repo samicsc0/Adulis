@@ -28,6 +28,22 @@
                 <a href=""><i class="fa fa-user" aria-hidden="true"></i></a>
             </div>
         </div>
+
+        <div class="mobile-header">
+            <img src="../Assets/img/adulislogo1000.png" alt="">
+            <a onclick="toggler()"><i class="fa fa-bars toggle-btn" aria-hidden="true"></i></a>
+        </div>
+        <div class="content-mobile-header" id="mobmen">
+            <a href="http://">Categories</a>
+            <a href="http://">New Items</a>
+            <a href="">My Wish List</a>
+            <div class="search-bar">
+                <input type="text" name="search" id="searchbox" placeholder="Search Products">
+                <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
+            </div>
+            <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Cart</a>
+            <a href=""><i class="fa fa-user" aria-hidden="true"></i>&nbsp; Profile</a>
+        </div>
     </header>
     <main>
         <div class="cart-container">
@@ -80,10 +96,10 @@
                     <p class="price">1000</p>
                     <p class="remove-cart">&#10761;</p>
                 </div>
-                
+
                 <a href="" class="checkout">Check Out</a>
             </div>
-            
+
 
 
         </div>
@@ -124,6 +140,20 @@
             </div>
         </div>
     </footer>
+    <script>
+        /* Menu Event Listener for mobile devices */
+        let menustate = false;
+
+        function toggler() {
+            if (menustate === false) {
+                document.getElementById("mobmen").style.display = "flex";
+                menustate = true;
+            } else {
+                document.getElementById("mobmen").style.display = "none";
+                menustate = false;
+            }
+        }
+    </script>
 </body>
 
 </html>

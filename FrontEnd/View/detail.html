@@ -30,6 +30,22 @@
                 <a href=""><i class="fa fa-user" aria-hidden="true"></i></a>
             </div>
         </div>
+
+        <div class="mobile-header">
+            <img src="../Assets/img/adulislogo1000.png" alt="">
+            <a onclick="toggler()"><i class="fa fa-bars toggle-btn" aria-hidden="true"></i></a>
+        </div>
+        <div class="content-mobile-header" id="mobmen">
+            <a href="http://">Categories</a>
+            <a href="http://">New Items</a>
+            <a href="">My Wish List</a>
+            <div class="search-bar">
+                <input type="text" name="search" id="searchbox" placeholder="Search Products">
+                <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
+            </div>
+            <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Cart</a>
+            <a href=""><i class="fa fa-user" aria-hidden="true"></i>&nbsp; Profile</a>
+        </div>
     </header>
     <main>
 
@@ -37,9 +53,9 @@
             <div class="top-option">
 
             </div>
-            <div class="col-1">
+            <div class="col col-1">
                 <div class="row-1">
-                    <img src="../Assets/img/iph.jpg" alt="">
+                    <img src="../Assets/img/iph.jpg" alt="" id="main-img">
                 </div>
                 <div class="row-2">
                     <img src="../Assets/img/iph.jpg" alt="">
@@ -48,7 +64,7 @@
                     <img src="../Assets/img/iph.jpg" alt="">
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col col-2">
                 <div class="row-1">
                     <p class="product-name">iPhone 14 Pro Max</p>
                     <p class="product-price">1000 Birr</p>
@@ -115,16 +131,17 @@
         </div>
     </footer>
     <script>
-        var secswiper = new new Swiper(".mySwipersec", {
-            slidesPerView: 3,
-            spaceBetween: 30,
-            freeMode: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-        });
-    </script>
+        let menustate = false;
+
+        function toggler() {
+            if (menustate === false) {
+                document.getElementById("mobmen").style.display = "flex";
+                menustate = true;
+            } else {
+                document.getElementById("mobmen").style.display = "none";
+                menustate = false;
+            }
+        }
     </script>
 </body>
 

@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <title>Adulis | Ethiopian Ecommerce Website</title>
-  <link href="">
 </head>
 
 <body>
@@ -30,6 +29,22 @@
         <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
         <a href=""><i class="fa fa-user" aria-hidden="true"></i></a>
       </div>
+    </div>
+
+    <div class="mobile-header">
+      <img src="../Assets/img/adulislogo1000.png" alt="">
+      <a onclick="toggler()"><i class="fa fa-bars toggle-btn" aria-hidden="true"></i></a>
+    </div>
+    <div class="content-mobile-header" id="mobmen">
+      <a href="http://">Categories</a>
+      <a href="http://">New Items</a>
+      <a href="">My Wish List</a>
+      <div class="search-bar">
+        <input type="text" name="search" id="searchbox" placeholder="Search Products">
+        <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
+      </div>
+      <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Cart</a>
+      <a href=""><i class="fa fa-user" aria-hidden="true"></i>&nbsp; Profile</a>
     </div>
   </header>
   <main>
@@ -963,15 +978,40 @@
     });
 
     /* Swiper for featured items*/
-    var secswiper = new new Swiper(".mySwipersec", {
+    var secswiper = new Swiper(".mySwipersec", {
+      breakpoints: {
+        985:{
       slidesPerView: 3,
       spaceBetween: 30,
+        },
+        500:{
+      slidesPerView: 2,
+      spaceBetween: 20,
+        },
+        100:{
+          slidesPerView: 1,
+          spaceBetween: 10
+        }
+      },
       freeMode: true,
       pagination: {
         el: ".swiper-pagination",
         clickable: true,
       },
     });
+    /* Menu Event Listener for mobile devices */
+    let menustate = false;
+
+    function toggler() {
+      if (menustate === false) {
+        document.getElementById("mobmen").style.display = "flex";
+        menustate = true;
+      } else {
+        document.getElementById("mobmen").style.display = "none";
+        menustate = false;
+      }
+    }
+
   </script>
 </body>
 
