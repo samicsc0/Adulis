@@ -15,10 +15,19 @@
     <div class="contact-container">
       <p class="contact-title">Reach Us For Any Complain...</p>
       <div class="contact-wrapper">
-        <form action="">
-          <input type="email" name="" id="" placeholder="Email">
-          <input type="text" name="" id="" placeholder="Your Message Here...">
-          <input type="submit" value="Send &nbsp;&nbsp;&#8594;" class="Send">
+        <form action="" method='POST'>
+          <input type="email" name="email" id="" placeholder="Email" required>
+          <input type="text" name="message" id="" placeholder="Your Message Here..." required>
+          <input type="submit" name='submit' value="Send &nbsp;&nbsp;&#8594;" class="Send">
+          <?php
+          require 'inputcleaner.php';
+          require_once '../../BackEnd/User.php';
+          if (isset($_POST['submit'])) {
+            $email = input_cleaner($_POST['email']);
+            $mess = input_cleaner($_POST['message']);
+            User::contactAdmin(31, $email, $mess);
+          }
+          ?>
         </form>
       </div>
     </div>
@@ -57,6 +66,11 @@
       </div>
     </div>
   </footer>
+  <script>
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
 </body>
 
 </html>

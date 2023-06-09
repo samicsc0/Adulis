@@ -44,15 +44,15 @@
                                 echo "Password Don't Match!";
                             } else {
                                 $password = hash("sha256", $password);
-                                $user = new Seller($firstname, $lastname, $phnumber, $email, $address, $password,$biz_name);
+                                $user = new Seller($firstname, $lastname, $phnumber, $email, $address, $password, $biz_name);
                                 $user->register();
                             }
                         }
                         ?>
                     </form>
                     <div class="additional-options">
-                        <p>Already have an account?&nbsp;&nbsp;<a href="http://">Sign in</a></p>
-                        <p>Customer Registration?&nbsp;&nbsp;<a href="http://">Click here</a></p>
+                        <p>Already have an account?&nbsp;&nbsp;<a href="./login.php">Sign in</a></p>
+                        <p>Customer Registration?&nbsp;&nbsp;<a href="./registration.php">Click here</a></p>
                     </div>
                 </div>
             </div>
@@ -97,6 +97,11 @@
             </div>
         </div>
     </footer>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
 </body>
 
 </html>

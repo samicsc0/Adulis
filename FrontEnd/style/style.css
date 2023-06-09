@@ -35,7 +35,7 @@ header {
     margin: auto;
     display: flex;
     justify-content: space-between;
-    
+
 }
 
 .header .options {
@@ -658,6 +658,10 @@ footer ul a:hover {
     padding: 5px 10px;
     border-radius: 8px;
 }
+.cart-container .cart-detail .quantity-sec a, .remove-cart {
+    text-decoration: none;
+    color: #000;
+}
 
 .cart-container .checkout {
     color: #000;
@@ -879,6 +883,7 @@ footer ul a:hover {
     color: #000;
 }
 
+
 .business-man-container {
     display: flex;
     justify-content: space-between;
@@ -896,6 +901,8 @@ footer ul a:hover {
 .business-man-container .menu-sec .menu-item {
     padding: 10px 5px;
     cursor: pointer;
+    text-decoration: none;
+    color: #000;
 }
 
 .business-man-container .opt-container {
@@ -1030,9 +1037,14 @@ footer ul a:hover {
     cursor: pointer;
 }
 
+.add-item-container form .row-4 {
+    display: flex;
+    gap: 50px;
+}
+
 /* Style for the statistics */
 
-.business-man-container .stats {
+.business-man-container .menu-item .business-man-container .stats {
     display: none;
 }
 
@@ -1116,7 +1128,7 @@ footer ul a:hover {
 
 /* Update Products Page */
 .update-product-head {
-    width: 90%;
+    width: 80%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -1206,7 +1218,12 @@ hr {
     display: none;
 }
 
-.business-man-container .deactive:hover {
+.business-man-container .deactive a {
+    text-decoration: none;
+    color: #000;
+}
+
+.business-man-container .deactive a:hover {
     color: red;
 }
 
@@ -1339,7 +1356,8 @@ hr {
 header .mobile-header {
     display: none;
 }
-.content-mobile-header{
+
+.content-mobile-header {
     display: none;
     height: 100vh;
     width: 100vw;
@@ -1350,12 +1368,14 @@ header .mobile-header {
     gap: 5vh;
     align-items: center;
 }
-header .content-mobile-header a{
+
+header .content-mobile-header a {
     text-decoration: none;
     color: #000;
     font-size: 1.5rem;
 }
-.content-mobile-header .search-bar .search-btn{
+
+.content-mobile-header .search-bar .search-btn {
     background-color: #013D29;
     color: #fff;
     padding: 5px;
@@ -1381,81 +1401,102 @@ header .content-mobile-header a{
         font-size: 2rem;
         align-self: center;
     }
-    .banner{
+
+    .banner {
         height: 20vh;
     }
+
     .item-desc .item-img {
         width: 100%;
         height: 200px;
         object-fit: cover;
     }
-    .swiper-slide{
+
+    .swiper-slide {
         width: 500px;
     }
-    .foot-container{
+
+    .foot-container {
         flex-direction: column;
     }
-    .foot-container .col{
+
+    .foot-container .col {
         width: 100%;
     }
+
     /* Cart Page */
-    .cart-container .cart-wrapper img{
+    .cart-container .cart-wrapper img {
         width: 50px;
     }
+
     /*Categories Seciton */
-    .cat-container .cat-wrapper{
-        grid-template-columns: repeat(1,1fr);
+    .cat-container .cat-wrapper {
+        grid-template-columns: repeat(1, 1fr);
     }
+
     /* Checkout Page */
-    .checkout-wrapper{
+    .checkout-wrapper {
         flex-direction: column-reverse;
         gap: 10px;
     }
-    .checkout-wrapper .col-2{
+
+    .checkout-wrapper .col-2 {
         gap: 50px;
     }
-    .checkout-wrapper .col{
-        padding:20px 10px;
+
+    .checkout-wrapper .col {
+        padding: 20px 10px;
     }
+
     /*Contact Page */
-    .contact-container .contact-wrapper form{
+    .contact-container .contact-wrapper form {
         width: 100%;
     }
+
     /*Detail Page*/
-    .detailpg-container{
+    .detailpg-container {
         flex-direction: column;
     }
-    .detailpg-container .col{
+
+    .detailpg-container .col {
         width: 100%;
     }
-    .detailpg-container #main-img{
+
+    .detailpg-container #main-img {
         height: 300px;
     }
+
     .detailpg-container .col-2 .row-1 .product-name,
     .detailpg-container .col-2 .row-1 .product-price {
         margin-top: 10px;
         font-size: 1.4rem;
     }
+
     /* List Page */
-    .list-container-grid{
+    .list-container-grid {
         grid-template-columns: repeat(1, 1fr);
     }
+
     /* Login Page*/
     .login-container {
         width: 100%;
     }
-    .new-password{
+
+    .new-password {
         width: 100%;
     }
+
     /* Registration Page */
     .reg-container .col-1 {
         width: 100%;
     }
-    .reg-container .col-2{
+
+    .reg-container .col-2 {
         display: none;
     }
+
     /* reset confirmation*/
-    .reset-container{
+    .reset-container {
         width: 100%;
     }
 }

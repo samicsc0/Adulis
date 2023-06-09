@@ -24,14 +24,13 @@
                 if (isset($_POST['submit'])) {
                     $email = input_cleaner($_POST['email']);
                     $password = hash("sha256", $_POST['password']);
-                    $user = new User(null, null, null, $email, null, $password);
-                    $user->login();
+                    User::login($email,$password);
                 }
                 ?>
             </form>
             <div class="additional-options">
-                <p>Forget Password?&nbsp;&nbsp;<a href="http://">Reset</a></p>
-                <p>Don't have an account?&nbsp;&nbsp;<a href="http://">Register</a></p>
+                <p>Forget Password?&nbsp;&nbsp;<a href="./resetpassword.php">Reset</a></p>
+                <p>Don't have an account?&nbsp;&nbsp;<a href="./registration.php">Register</a></p>
             </div>
         </div>
     </main>

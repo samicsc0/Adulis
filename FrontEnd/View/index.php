@@ -13,40 +13,13 @@
 </head>
 
 <body>
-  <header>
-    <div class="header">
-      <div class="logo">
-        <img src="../Assets/img/adulislogo1000.png" alt="Adulis Logo">
-      </div>
-      <div class="options">
-        <a href="http://">Categories</a>
-        <a href="http://">New Items</a>
-        <a href="">My Wish List</a>
-        <div class="search-bar">
-          <input type="text" name="search" id="searchbox" placeholder="Search Products">
-          <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-        </div>
-        <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-        <a href=""><i class="fa fa-user" aria-hidden="true"></i></a>
-      </div>
-    </div>
-
-    <div class="mobile-header">
-      <img src="../Assets/img/adulislogo1000.png" alt="">
-      <a onclick="toggler()"><i class="fa fa-bars toggle-btn" aria-hidden="true"></i></a>
-    </div>
-    <div class="content-mobile-header" id="mobmen">
-      <a href="http://">Categories</a>
-      <a href="http://">New Items</a>
-      <a href="">My Wish List</a>
-      <div class="search-bar">
-        <input type="text" name="search" id="searchbox" placeholder="Search Products">
-        <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-      </div>
-      <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Cart</a>
-      <a href=""><i class="fa fa-user" aria-hidden="true"></i>&nbsp; Profile</a>
-    </div>
-  </header>
+  <?php
+    require_once '../../BackEnd/Session/usersession.php';
+    require_once '../Components/header.php'; 
+    require_once '../../BackEnd/User.php';
+    require_once '../../BackEnd/Cart.php';
+    $user = new User($_SESSION['customer_id'],$_SESSION['email']);
+  ?>
   <main>
     <div class="swiper mySwiper banner">
       <div class="swiper-wrapper">
@@ -83,120 +56,54 @@
 
       <div class="swiper mySwipersec items-slider">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
 
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
 
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
+          <?php
+          require '../../BackEnd/config.php';
+          $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+            INNER JOIN(
+                        SELECT product_id, url
+                        FROM image
+                        GROUP BY product_id
+            ) AS i ON p.product_id = i.product_id
+            WHERE cat = 'Phone n Tablets' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+          $result = mysqli_query($conn, $sql);
+          while ($row = $result->fetch_assoc()) {
+            echo '<div class="swiper-slide">
+              <div class="item-desc">
+              <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  <p class="title">' . $row['product_name'] . '</p>
+                  <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
+                    <p class="desc">' . $row['main_description'] . '</p>
+                    <p class="rating">';
+            $rating = $row['rating'];
+            for ($i = 1; $i <= 5; $i++) {
+              if ($i <= $rating) {
+                echo '<span class="fa fa-star checked"></span>';
+              } else {
+                echo '<span class="fa fa-star"></span>';
+              }
+            }
+            echo '</span><span>(300)</span>
+                    </p>
+                    <a href="../../BackEnd/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  </div>
                 </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
+                </div>';
+          }
+          ?>
         </div>
         <div class="swiper-pagination"></div>
       </div>
 
     </div>
 
-    <!---->
+
 
     <div class="phone-sec list-sec">
       <p class="sec-title">TV & Monitors &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=second"><i
@@ -206,119 +113,50 @@
 
       <div class="swiper mySwipersec items-slider">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
-
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
+          <?php
+          require '../../BackEnd/config.php';
+          $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+            INNER JOIN(
+                        SELECT product_id, url
+                        FROM image
+                        GROUP BY product_id
+            ) AS i ON p.product_id = i.product_id
+            WHERE cat = 'TV n Monitors' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+          $result = mysqli_query($conn, $sql);
+          while ($row = $result->fetch_assoc()) {
+            echo '<div class="swiper-slide">
+              <div class="item-desc">
+              <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  <p class="title">' . $row['product_name'] . '</p>
+                  <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
+                    <p class="desc">' . $row['main_description'] . '</p>
+                    <p class="rating">';
+            $rating = $row['rating'];
+            for ($i = 1; $i <= 5; $i++) {
+              if ($i <= $rating) {
+                echo '<span class="fa fa-star checked"></span>';
+              } else {
+                echo '<span class="fa fa-star"></span>';
+              }
+            }
+            echo '</span><span>(300)</span>
+                    </p>
+                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  </div>
                 </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
+                </div>';
+          }
+          ?>
         </div>
         <div class="swiper-pagination"></div>
       </div>
 
     </div>
-    <!---->
 
     <div class="phone-sec list-sec">
       <p class="sec-title">Desktop & Laptop Computers &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=third"><i
@@ -328,119 +166,53 @@
 
       <div class="swiper mySwipersec items-slider">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
 
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
+          <?php
+          require '../../BackEnd/config.php';
+          $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+            INNER JOIN(
+                        SELECT product_id, url
+                        FROM image
+                        GROUP BY product_id
+            ) AS i ON p.product_id = i.product_id
+            WHERE cat = 'Desktop n Laptop Computers' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+          $result = mysqli_query($conn, $sql);
+          while ($row = $result->fetch_assoc()) {
+            echo '<div class="swiper-slide">
+              <div class="item-desc">
+              <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  <p class="title">' . $row['product_name'] . '</p>
+                  <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
+                    <p class="desc">' . $row['main_description'] . '</p>
+                    <p class="rating">';
+            $rating = $row['rating'];
+            for ($i = 1; $i <= 5; $i++) {
+              if ($i <= $rating) {
+                echo '<span class="fa fa-star checked"></span>';
+              } else {
+                echo '<span class="fa fa-star"></span>';
+              }
+            }
+            echo '</span><span>(300)</span>
+                    </p>
+                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
-              </div>
-            </div>
+                  </div>
+                </div>
+                </div>';
+          }
+          ?>
 
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
         <div class="swiper-pagination"></div>
       </div>
 
     </div>
-    <!---->
 
     <div class="phone-sec list-sec">
       <p class="sec-title">Accessories &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=fourth"><i
@@ -450,113 +222,48 @@
 
       <div class="swiper mySwipersec items-slider">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
 
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
+          <?php
+          require '../../BackEnd/config.php';
+          $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+            INNER JOIN(
+                        SELECT product_id, url
+                        FROM image
+                        GROUP BY product_id
+            ) AS i ON p.product_id = i.product_id
+            WHERE cat = 'Accessories' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+          $result = mysqli_query($conn, $sql);
+          while ($row = $result->fetch_assoc()) {
+            echo '<div class="swiper-slide">
+              <div class="item-desc">
+              <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  <p class="title">' . $row['product_name'] . '</p>
+                  <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
+                    <p class="desc">' . $row['main_description'] . '</p>
+                    <p class="rating">';
+            $rating = $row['rating'];
+            for ($i = 1; $i <= 5; $i++) {
+              if ($i <= $rating) {
+                echo '<span class="fa fa-star checked"></span>';
+              } else {
+                echo '<span class="fa fa-star"></span>';
+              }
+            }
+            echo '</span><span>(300)</span>
+                    </p>
+                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
-              </div>
-            </div>
+                  </div>
+                </div>
+                </div>';
+          }
+          ?>
 
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
         <div class="swiper-pagination"></div>
       </div>
@@ -572,113 +279,45 @@
 
       <div class="swiper mySwipersec items-slider">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
-
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
+          <?php
+          require '../../BackEnd/config.php';
+          $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+            INNER JOIN(
+                        SELECT product_id, url
+                        FROM image
+                        GROUP BY product_id
+            ) AS i ON p.product_id = i.product_id
+            WHERE cat = 'Shoes' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+          $result = mysqli_query($conn, $sql);
+          while ($row = $result->fetch_assoc()) {
+            echo '<div class="swiper-slide">
+              <div class="item-desc">
+              <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  <p class="title">' . $row['product_name'] . '</p>
+                  <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
+                    <p class="desc">' . $row['main_description'] . '</p>
+                    <p class="rating">';
+            $rating = $row['rating'];
+            for ($i = 1; $i <= 5; $i++) {
+              if ($i <= $rating) {
+                echo '<span class="fa fa-star checked"></span>';
+              } else {
+                echo '<span class="fa fa-star"></span>';
+              }
+            }
+            echo '</span><span>(300)</span>
+                    </p>
+                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  </div>
                 </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
+                </div>';
+          }
+          ?>
         </div>
         <div class="swiper-pagination"></div>
       </div>
@@ -694,113 +333,45 @@
 
       <div class="swiper mySwipersec items-slider">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
-
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
+          <?php
+          require '../../BackEnd/config.php';
+          $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+            INNER JOIN(
+                        SELECT product_id, url
+                        FROM image
+                        GROUP BY product_id
+            ) AS i ON p.product_id = i.product_id
+            WHERE cat = 'Books' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+          $result = mysqli_query($conn, $sql);
+          while ($row = $result->fetch_assoc()) {
+            echo '<div class="swiper-slide">
+              <div class="item-desc">
+              <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  <p class="title">' . $row['product_name'] . '</p>
+                  <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
+                    <p class="desc">' . $row['main_description'] . '</p>
+                    <p class="rating">';
+            $rating = $row['rating'];
+            for ($i = 1; $i <= 5; $i++) {
+              if ($i <= $rating) {
+                echo '<span class="fa fa-star checked"></span>';
+              } else {
+                echo '<span class="fa fa-star"></span>';
+              }
+            }
+            echo '</span><span>(300)</span>
+                    </p>
+                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  </div>
                 </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
+                </div>';
+          }
+          ?>
         </div>
         <div class="swiper-pagination"></div>
       </div>
@@ -816,113 +387,99 @@
 
       <div class="swiper mySwipersec items-slider">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
+          <?php
+          require '../../BackEnd/config.php';
+          $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+            INNER JOIN(
+                        SELECT product_id, url
+                        FROM image
+                        GROUP BY product_id
+            ) AS i ON p.product_id = i.product_id
+            WHERE cat = 'Personal Care n Beauty' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+          $result = mysqli_query($conn, $sql);
+          while ($row = $result->fetch_assoc()) {
+            echo '<div class="swiper-slide">
+              <div class="item-desc">
+              <img src="' . $row['url'] . '"alt="item" class="item-img">
+              <div class="desc-sec">
+                <div class="row-1">
+                  <p class="title">' . $row['product_name'] . '</p>
+                  <p class="price">' . $row['price'] . '</p>
+                </div>
+                <div class="row-2">
+                    <p class="desc">' . $row['main_description'] . '</p>
+                    <p class="rating">';
+            $rating = $row['rating'];
+            for ($i = 1; $i <= 5; $i++) {
+              if ($i <= $rating) {
+                echo '<span class="fa fa-star checked"></span>';
+              } else {
+                echo '<span class="fa fa-star"></span>';
+              }
+            }
+            echo '</span><span>(300)</span>
+                    </p>
+                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+                </div>
+                  </div>
+                </div>
+                </div>';
+          }
+          ?>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
 
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
+    </div>
+    <!---->
 
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
+    <div class="phone-sec list-sec">
+      <p class="sec-title">Unsorted Items&nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=seventh"><i
+            class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </p>
+
+      <div class="swiper mySwipersec items-slider">
+        <div class="swiper-wrapper">
+          <?php
+          require '../../BackEnd/config.php';
+          $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+            INNER JOIN(
+                        SELECT product_id, url
+                        FROM image
+                        GROUP BY product_id
+            ) AS i ON p.product_id = i.product_id
+            WHERE cat = 'Unsorted' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+          $result = mysqli_query($conn, $sql);
+          while ($row = $result->fetch_assoc()) {
+            echo '<div class="swiper-slide">
+              <div class="item-desc">
+              <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  <p class="title">' . $row['product_name'] . '</p>
+                  <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
+                    <p class="desc">' . $row['main_description'] . '</p>
+                    <p class="rating">';
+            $rating = $row['rating'];
+            for ($i = 1; $i <= 5; $i++) {
+              if ($i <= $rating) {
+                echo '<span class="fa fa-star checked"></span>';
+              } else {
+                echo '<span class="fa fa-star"></span>';
+              }
+            }
+            echo '</span><span>(300)</span>
+                    </p>
+                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
+                  </div>
                 </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="item-desc">
-              <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-              <div class="desc-sec">
-                <div class="row-1">
-                  <p class="title">iPhone 14 Pro</p>
-                  <p class="price">1000 Birr</p>
-                </div>
-                <div class="row-2">
-                  <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-                  <p class="rating"><span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span><span>(300)</span>
-                  </p>
-                  <a href="" class="btn-addcart">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-          </div>
+                </div>';
+          }
+          ?>
         </div>
         <div class="swiper-pagination"></div>
       </div>
@@ -980,15 +537,15 @@
     /* Swiper for featured items*/
     var secswiper = new Swiper(".mySwipersec", {
       breakpoints: {
-        985:{
-      slidesPerView: 3,
-      spaceBetween: 30,
+        985: {
+          slidesPerView: 3,
+          spaceBetween: 30,
         },
-        500:{
-      slidesPerView: 2,
-      spaceBetween: 20,
+        500: {
+          slidesPerView: 2,
+          spaceBetween: 20,
         },
-        100:{
+        100: {
           slidesPerView: 1,
           spaceBetween: 10
         }

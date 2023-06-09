@@ -11,34 +11,22 @@
 </head>
 
 <body>
-    <header>
-        <div class="header">
-            <div class="logo">
-                <img src="../Assets/img/adulislogo1000.png" alt="Adulis Logo">
-            </div>
-            <div class="options">
-                <a href="http://">Categories</a>
-                <a href="http://">New Items</a>
-                <a href="">My Wish List</a>
-                <div class="search-bar">
-                    <input type="text" name="search" id="searchbox" placeholder="Search Products">
-                    <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-                </div>
-                <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                <a href=""><i class="fa fa-user" aria-hidden="true"></i></a>
-            </div>
-        </div>
-    </header>
+    <?php
+        require_once  '../Components/header.php';
+    ?>
     <main>
         <div class="search-container">
-            <p class="search-title">Results For iPhone 14 ...</p>
+            <?php 
+                 $search_query = $_POST['search'];
+            ?>
+            <p class="search-title">Results For <?=$search_query?> ...</p>
             <div class="sort-choice">
                 <form action="">
                     <p class="sort-desc">Sort By</p>
                     <div class="sort-option-area">
-                        <input type="checkbox" name="" id="sort-price">
+                        <input type="radio" name="search" id="sort-price">
                         <label for="sort-price">Price</label>
-                        <input type="checkbox" name="" id="sort-rate">
+                        <input type="radio" name="search" id="sort-rate">
                         <label for="sort-rate">Rating</label>
                     </div>
                 </form>

@@ -18,7 +18,7 @@
             <input type="email" name="email" id="email" placeholder="Enter your email">
             <input type="submit" value="Continue" class="submit">
         </form>
-        <p class="back"><a href="http://">&#8592; Back to Login</a></p>
+        <p class="back"><a href="./login.php">&#8592; Back to Login</a></p>
     </div>
 
 </body>

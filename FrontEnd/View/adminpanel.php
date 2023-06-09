@@ -1,3 +1,7 @@
+<?php
+require_once '../../BackEnd/Admin.php';
+$admin = new Admin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,8 +54,8 @@
                 <a class="menu-item active" id="seller-btn" onclick="select('seller-btn','opt-2')"><i
                         class="fa fa-user-tie" aria-hidden="true"></i>
                     &nbsp; Sellers</a>
-                <a class="menu-item" id="newseller-btn" onclick="select('newseller-btn','opt-8')"><i
-                        class="fa fa-store" aria-hidden="true"></i>
+                <a class="menu-item" id="newseller-btn" onclick="select('newseller-btn','opt-8')"><i class="fa fa-store"
+                        aria-hidden="true"></i>
                     &nbsp; New Sellers</a>
                 <a class="menu-item" id="buyer-btn" onclick="select('buyer-btn','opt-3')"><i
                         class="fa fa-shopping-basket" aria-hidden="true"></i> &nbsp; Buyers</a>
@@ -71,24 +75,45 @@
                 <!-- Second Option -->
                 <div class="seller-man" id="opt-2">
                     <div class="seller-wrapper">
-                        <div class="seller">
-                            <p class="biz_name">kaldi's Coffe</p>
-                            <p class="full_name">Samuel Zewde</p>
-                            <p class="phno">+251944263239</p>
-                            <p class="location">Bethel Square</p>
-                            <p class="deactive">Deactivate Account</p>
-                        </div>
+                        <?php
+                        $data = $admin->listSellers();
+                        while ($row = $data->fetch_assoc()) {
+                            echo '<div class="seller">
+                                <p class="biz_name">' . $row['business_name'] . '</p>
+                                <p class="full_name">' . $row['first_name'] . ' ' . $row['last_name'] . '</p>
+                                <p class="phno">' . $row['phone_number'] . '</p>
+                                <p class="location">' . $row['address'] . '</p>
+                                <p class="deactive">';
+                            if ($row['acct_status'] == 1) {
+                                echo '<a href="../../BackEnd/deactivate.php">Deactivate Account</a>';
+                            } else {
+                                echo '<a href="../../BackEnd/activate.php">Activate Account</a>';
+                            }
+                            echo '</p></div>';
+                        }
+                        ?>
+
                     </div>
                 </div>
                 <!-- Third Option -->
                 <div class="buyer-man" id="opt-3">
                     <div class="buyer-wrapper">
-                        <div class="seller">
-                            <p class="full_name">Samuel Zewde</p>
-                            <p class="phno">+251944263239</p>
-                            <p class="location">Bethel Square</p>
-                            <p class="deactive">Deactivate Account</p>
-                        </div>
+                        <?php
+                        $data = $admin->listBuyers();
+                        while ($row = $data->fetch_assoc()) {
+                            echo '<div class="seller">
+                                <p class="full_name">' . $row['first_name'] . ' ' . $row['last_name'] . '</p>
+                                <p class="phno">' . $row['phone_number'] . '</p>
+                                <p class="location">' . $row['address'] . '</p>
+                                <p class="deactive">';
+                            if ($row['acct_status'] == 1) {
+                                echo '<a href="../../BackEnd/deactivate.php">Deactivate Account</a>';
+                            } else {
+                                echo '<a href="../../BackEnd/activate.php">Activate Account</a>';
+                            }
+                            echo '</p></div>';
+                        }
+                        ?>
                     </div>
                 </div>
                 <!-- Fourth Option -->
@@ -169,22 +194,51 @@
                 <!-- Eigth Option-->
                 <div class="newsell" id="opt-8">
                     <div class="seller-wrapper">
-                        <div class="seller">
+                        <!-- <div class="seller">
                             <p class="biz_name">kaldi's Coffe</p>
                             <p class="full_name">Samuel Zewde</p>
                             <p class="phno">+251944263239</p>
                             <p class="location">Bethel Square</p>
                             <p class="deactive">Activate Account</p>
-                        </div>
+                        </div> -->
+                        <?php
+                        $data = $admin->newSellers();
+                        while ($row = $data->fetch_assoc()) {
+                            echo '<div class="seller">
+                                <p class="biz_name">' . $row['business_name'] . '</p>
+                                <p class="full_name">' . $row['first_name'] . ' ' . $row['last_name'] . '</p>
+                                <p class="phno">' . $row['phone_number'] . '</p>
+                                <p class="location">' . $row['address'] . '</p>
+                                <p class="deactive">';
+                            if ($row['acct_status'] == 1) {
+                                echo '<a href="../../BackEnd/deactivate.php">Deactivate Account</a>';
+                            } else {
+                                echo '<a href="../../BackEnd/activate.php">Activate Account</a>';
+                            }
+                            echo '</p></div>';
+                        }
+                        ?>
                     </div>
                 </div>
 
                 <!-- First Option-->
                 <div class="delivery" id="opt-1">
-                    <form action="" class="delivery-form">
+                    <?php
+                    $res = $admin->getDeliveryPrice();
+                    $row = $res->fetch_assoc();
+                    $price = $row['price'];
+                    ?>
+                    <form action="" class="delivery-form" method="POST">
                         <p class="update-price">Update Delivery Price</p>
-                        <input type="number" name="" id="" placeholder="Delivery Price">
-                        <input type="submit" value="Update">
+                        <input type="number" name="price" id="" placeholder="Delivery Price" value="<?= $price; ?>"
+                            required>
+                        <input type="submit" name="submit" value="Update">
+                        <?php
+                        if (isset($_POST['submit'])) {
+                            $price = $_POST['price'];
+                            $admin->updateDeliveryPrice($price);
+                        }
+                        ?>
                     </form>
                 </div>
 
@@ -215,6 +269,9 @@
             disableAll();
             document.getElementById(targ).style.display = "block";
             document.getElementById(opt).style.backgroundColor = "#00000027";
+        }
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
         }
     </script>
 </body>

@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
-    <!-- <link rel="stylesheet" href="../../BackEnd/User.php"> -->
     <title>Adulis Registration</title>
 </head>
 
@@ -51,8 +50,8 @@
                         ?>
                     </form>
                     <div class="additional-options">
-                        <p>Already have an account?&nbsp;&nbsp;<a href="http://">Sign in</a></p>
-                        <p>Business Registration?&nbsp;&nbsp;<a href="http://">Click here</a></p>
+                        <p>Already have an account?&nbsp;&nbsp;<a href="./login.php">Sign in</a></p>
+                        <p>Business Registration?&nbsp;&nbsp;<a href="./bizregistration.php">Click here</a></p>
                     </div>
                 </div>
             </div>
