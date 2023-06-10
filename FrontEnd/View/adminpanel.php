@@ -11,7 +11,7 @@ $admin = new Admin();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-    <title>Business Managment </title>
+    <title>Admin Panel</title>
     <script>
         function isMobileDevice() {
             return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
@@ -151,8 +151,7 @@ $admin = new Admin();
                             <input type="email" name="" id="" placeholder="Email" required>
                             <input type="number" name="" id="" placeholder="Phone Number" required>
                             <input type="text" name="" id="" placeholder="Address">
-                            <a href="">Locate Me</a>
-                            <input type="submit" value="Update">
+                            <input type="submit" name='submit-0' value="Update">
                         </form>
                     </div>
                 </div>
@@ -165,7 +164,7 @@ $admin = new Admin();
                             <input type="password" name="" id="" placeholder="Old Password">
                             <input type="password" name="" id="" placeholder="New Password">
                             <input type="password" name="" id="" placeholder="Confirm Password">
-                            <input type="submit" value="Update">
+                            <input type="submit" name='submit-1' value="Update">
                         </form>
                     </div>
                 </div>
@@ -173,12 +172,26 @@ $admin = new Admin();
                 <!-- Sevent Option-->
                 <div class="enquires" id="opt-7">
                     <div class="enquires-wrapper">
-                        <div class="enquiry">
+                        <?php
+                            $messageRes = $admin->getMessages();
+                            while($row = $messageRes->fetch_assoc()){
+                                echo '<div class="enquiry">
+                                <div class="row-1">
+                                    <p class="email-account">'.$row['email'].'</p>
+                                    <p class="user-type">'.$row['role'].'</p>
+                                    <p class="time">'.date_format(date_create($row['date']), 'd-m-Y') .'</p>
+                                    </div>
+                                    <div class="row-2">
+                                        <p class="message">'.$row['message'].'</p>
+                                    </div>
+                                </div>';
+                            }
+                        ?>
+                        <!-- <div class="enquiry">
                             <div class="row-1">
                                 <p class="email-account">samuelzewde29@gmail.com</p>
                                 <p class="user-type">Buyer</p>
                                 <p class="time">5/30/2023</p>
-                                <p class="markasread">Mark as Read</p>
                             </div>
                             <div class="row-2">
                                 <p class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam,
@@ -186,7 +199,7 @@ $admin = new Admin();
                                     inventore possimus alias eos blanditiis obcaecati cum harum fugiat. Nam, illo
                                     perferendis.</p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>
@@ -232,9 +245,9 @@ $admin = new Admin();
                         <p class="update-price">Update Delivery Price</p>
                         <input type="number" name="price" id="" placeholder="Delivery Price" value="<?= $price; ?>"
                             required>
-                        <input type="submit" name="submit" value="Update">
+                        <input type="submit" name="submit-2" value="Update">
                         <?php
-                        if (isset($_POST['submit'])) {
+                        if (isset($_POST['submit-2'])) {
                             $price = $_POST['price'];
                             $admin->updateDeliveryPrice($price);
                         }

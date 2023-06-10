@@ -67,5 +67,18 @@ class Admin extends User
             $stmt->error;
         }
     }
+    public function getMessages(){
+        require 'config.php';
+        $sql = "SELECT message.message_id, message.email, message.message, message.status, message.date, customer.role FROM message
+        INNER JOIN customer ON message.customer_id = customer.customer_id";
+        $result = mysqli_query($conn,$sql);
+        return $result;
+    }
+    public function markAsRead($id){
+        require 'config.php';
+        $sql = "UPDATE message 
+        SET status = 1 
+        WHERE message_id = $id";
+    }
 }
 ?>
