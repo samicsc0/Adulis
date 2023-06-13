@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+if ($_SESSION['status'] == 'logged') {
+  require_once '../../BackEnd/User.php';
+  $user = new User($_SESSION['customer_id'], $_SESSION['email']);
+} else {
+  header('location: ../../FrontEnd/View/login.php');
+}
+?>
 
 <head>
   <meta charset="UTF-8">
@@ -21,11 +30,10 @@
           <input type="submit" name='submit' value="Send &nbsp;&nbsp;&#8594;" class="Send">
           <?php
           require 'inputcleaner.php';
-          require_once '../../BackEnd/User.php';
           if (isset($_POST['submit'])) {
             $email = input_cleaner($_POST['email']);
             $mess = input_cleaner($_POST['message']);
-            User::contactAdmin(31, $email, $mess);
+            $user->contactAdmin($email, $mess);
           }
           ?>
         </form>

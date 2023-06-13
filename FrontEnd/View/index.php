@@ -24,32 +24,29 @@
     <div class="swiper mySwiper banner">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img src="../Assets/img/phonebanner-1.jpg" alt="" class="swiper-img">
+          <img src="../Assets/img/Computer.png" alt="" class="swiper-img">
         </div>
         <div class="swiper-slide">
-          <img src="../Assets/img/accessories.png" alt="" class="swiper-img">
+          <img src="../Assets/img/Mobile.png" alt="" class="swiper-img">
         </div>
         <div class="swiper-slide">
-          <img src="../Assets/img/bookbanner.png" alt="" class="swiper-img">
+          <img src="../Assets/img/Accessories.png" alt="" class="swiper-img">
         </div>
         <div class="swiper-slide">
-          <img src="../Assets/img/laptopbanner.jpg" alt="" class="swiper-img">
+          <img src="../Assets/img/Shoe.png" alt="" class="swiper-img">
         </div>
         <div class="swiper-slide">
-          <img src="../Assets/img/shoes banner.jpg" alt="" class="swiper-img">
+          <img src="../Assets/img/Book's.png" alt="" class="swiper-img">
         </div>
         <div class="swiper-slide">
-          <img src="../Assets/img/tvbanner.jpg" alt="" class="swiper-img">
-        </div>
-        <div class="swiper-slide">
-          <img src="../Assets/img/" alt="" class="swiper-img">
+          <img src="../Assets/img/Care and Beauty.png" alt="" class="swiper-img">
         </div>
       </div>
       <div class="swiper-pagination"></div>
     </div>
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Phone & Tablets &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=first"><i
+      <p class="sec-title">Phone & Tablets &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=1"><i
             class="fa fa-arrow-right" aria-hidden="true"></i>
         </a>
       </p>
@@ -75,7 +72,7 @@
               <div class="desc-sec">
                 <div class="row-1">
                   <p class="title">' . $row['product_name'] . '</p>
-                  <p class="price">' . $row['price'] . '</p>
+                  <p class="price">' . $row['price'] . ' Birr</p>
                 </div>
                 <div class="row-2">
                     <p class="desc">' . $row['main_description'] . '</p>
@@ -90,7 +87,7 @@
             }
             echo '</span><span>(300)</span>
                     </p>
-                    <a href="../../BackEnd/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
                 </div>
@@ -106,7 +103,7 @@
 
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">TV & Monitors &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=second"><i
+      <p class="sec-title">TV & Monitors &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=2"><i
             class="fa fa-arrow-right" aria-hidden="true"></i>
         </a>
       </p>
@@ -159,7 +156,7 @@
     </div>
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Desktop & Laptop Computers &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=third"><i
+      <p class="sec-title">Desktop & Laptop Computers &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=3"><i
             class="fa fa-arrow-right" aria-hidden="true"></i>
         </a>
       </p>
@@ -215,7 +212,7 @@
     </div>
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Accessories &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=fourth"><i
+      <p class="sec-title">Accessories &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=4"><i
             class="fa fa-arrow-right" aria-hidden="true"></i>
         </a>
       </p>
@@ -272,7 +269,7 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Shoes &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=fifth"><i class="fa fa-arrow-right"
+      <p class="sec-title">Shoes &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=5"><i class="fa fa-arrow-right"
             aria-hidden="true"></i>
         </a>
       </p>
@@ -326,7 +323,7 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Books &nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=sixth"><i class="fa fa-arrow-right"
+      <p class="sec-title">Books &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=6"><i class="fa fa-arrow-right"
             aria-hidden="true"></i>
         </a>
       </p>
@@ -380,7 +377,7 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Personal Care & Beauty&nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=seventh"><i
+      <p class="sec-title">Personal Care & Beauty&nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=7"><i
             class="fa fa-arrow-right" aria-hidden="true"></i>
         </a>
       </p>
@@ -434,7 +431,7 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Unsorted Items&nbsp;&nbsp;&nbsp;<a href="./lists.php?sender=seventh"><i
+      <p class="sec-title">Unsorted Items&nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=9"><i
             class="fa fa-arrow-right" aria-hidden="true"></i>
         </a>
       </p>

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+require_once '../../BackEnd/Session/usersession.php';
+require_once '../../BackEnd/User.php';
+$user = new User($_SESSION['customer_id'],$_SESSION['email']);
+?>
 
 <head>
   <meta charset="UTF-8">
@@ -10,72 +15,56 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <title>Adulis | Ethiopian Ecommerce Website</title>
-  <link href="">
 </head>
 
 <body>
-  <header>
-    <div class="header">
-      <div class="logo">
-        <img src="../Assets/img/adulislogo1000.png" alt="Adulis Logo">
-      </div>
-      <div class="options">
-        <a href="http://">Categories</a>
-        <a href="http://">New Items</a>
-        <a href="">My Wish List</a>
-        <div class="search-bar">
-          <input type="text" name="search" id="searchbox" placeholder="Search Products">
-          <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-        </div>
-        <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-        <a href=""><i class="fa fa-user" aria-hidden="true"></i></a>
-      </div>
-    </div>
-
-    <div class="mobile-header">
-      <img src="../Assets/img/adulislogo1000.png" alt="">
-      <a onclick="toggler()"><i class="fa fa-bars toggle-btn" aria-hidden="true"></i></a>
-    </div>
-    <div class="content-mobile-header" id="mobmen">
-      <a href="http://">Categories</a>
-      <a href="http://">New Items</a>
-      <a href="">My Wish List</a>
-      <div class="search-bar">
-        <input type="text" name="search" id="searchbox" placeholder="Search Products">
-        <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-      </div>
-      <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Cart</a>
-      <a href=""><i class="fa fa-user" aria-hidden="true"></i>&nbsp; Profile</a>
-    </div>
-  </header>
+  <?php
+  require_once '../Components/header.php';
+  ?>
   <main>
     <?php
-    $listing_type = $_GET['sender'];
+    $listing_type = $_GET['cat'];
     $listing = "";
+    $res = "";
     switch ($listing_type) {
-      case 'first':
+      case 1:
         $listing = "Phone & Tablets";
+        $res = $user->getProducts("Phone n Tablets");
         break;
-      case 'second':
+      case 2:
         $listing = "TV & Monitors";
+        $res = $user->getProducts("TV n Monitors");
         break;
-      case 'third':
+      case 3:
         $listing = "Desktop & Laptop Computers";
+        $res = $user->getProducts("Desktop n Laptop Computers");
         break;
-      case 'fourth':
+      case 4:
         $listing = "Accessories";
+        $res = $user->getProducts("Accessories");
         break;
-      case 'fifth':
+      case 5:
         $listing = "Shoes";
+        $res = $user->getProducts("Shoes");
         break;
-      case 'sixth':
+      case 6:
         $listing = "Books";
+        $res = $user->getProducts("Books");
         break;
-      case 'seventh':
+      case 7:
         $listing = "Personal Care & Beauty";
+        $res = $user->getProducts("Personal Care n Beauty");
+        break;
+      case 8:
+        $listing = "Top Rated Items";
+        $res = $user->topRated();
+        break;
+      case 9:
+        $listing = "Unsorted Items";
+        $res = $user->getProducts("Unsorted");
         break;
       default:
-        $listing = "";
+        header('location: index.php');
         break;
     }
     ?>
@@ -85,82 +74,36 @@
 
 
     <div class="list-container list-container-grid">
-      <div class="item-desc">
-        <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-        <div class="desc-sec">
-          <div class="row-1">
-            <p class="title">iPhone 14 Pro</p>
-            <p class="price">1000 Birr</p>
-          </div>
-          <div class="row-2">
-            <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-            <p class="rating"><span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span><span>(300)</span>
-            </p>
-            <a href="" class="btn-addcart">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-      <div class="item-desc">
-        <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-        <div class="desc-sec">
-          <div class="row-1">
-            <p class="title">iPhone 14 Pro</p>
-            <p class="price">1000 Birr</p>
-          </div>
-          <div class="row-2">
-            <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-            <p class="rating"><span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span><span>(300)</span>
-            </p>
-            <a href="" class="btn-addcart">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-      <div class="item-desc">
-        <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-        <div class="desc-sec">
-          <div class="row-1">
-            <p class="title">iPhone 14 Pro</p>
-            <p class="price">1000 Birr</p>
-          </div>
-          <div class="row-2">
-            <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-            <p class="rating"><span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span><span>(300)</span>
-            </p>
-            <a href="" class="btn-addcart">Add to Cart</a>
-          </div>
-        </div>
-      </div>
-      <div class="item-desc">
-        <img src="../Assets/img/iph.jpg" alt="item" class="item-img">
-        <div class="desc-sec">
-          <div class="row-1">
-            <p class="title">iPhone 14 Pro</p>
-            <p class="price">1000 Birr</p>
-          </div>
-          <div class="row-2">
-            <p class="desc">Unmatched performance, and sleek design that fits comfortably in your hand.</p>
-            <p class="rating"><span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span><span>(300)</span>
-            </p>
-            <a href="" class="btn-addcart">Add to Cart</a>
-          </div>
-        </div>
-      </div>
+      <?php
+      while ($row = $res->fetch_assoc()) {
+        echo '<div class="swiper-slide">
+              <div class="item-desc">
+              <img src="' . $row['url'] . '"alt="item" class="item-img">
+              <div class="desc-sec">
+                <div class="row-1">
+                  <p class="title">' . $row['product_name'] . '</p>
+                  <p class="price">' . $row['price'] . '</p>
+                </div>
+                <div class="row-2">
+                    <p class="desc">' . $row['main_description'] . '</p>
+                    <p class="rating">';
+        $rating = $row['rating'];
+        for ($i = 1; $i <= 5; $i++) {
+          if ($i <= $rating) {
+            echo '<span class="fa fa-star checked"></span>';
+          } else {
+            echo '<span class="fa fa-star"></span>';
+          }
+        }
+        echo '</span><span>(300)</span>
+                    </p>
+                    <a href="../../BackEnd/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+                </div>
+                  </div>
+                </div>
+                </div>';
+      }
+      ?>
     </div>
   </main>
   <footer>

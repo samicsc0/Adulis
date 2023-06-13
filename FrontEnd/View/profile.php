@@ -1,5 +1,7 @@
 <?php
-require '../../BackEnd/User.php';
+require_once '../../BackEnd/Session/usersession.php';
+require_once '../../BackEnd/User.php';
+$user = new User($_SESSION['customer_id'],$_SESSION['email']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,24 +16,9 @@ require '../../BackEnd/User.php';
 </head>
 
 <body>
-    <header>
-        <div class="header">
-            <div class="logo">
-                <img src="../Assets/img/adulislogo1000.png" alt="Adulis Logo">
-            </div>
-            <div class="options">
-                <a href="http://">Categories</a>
-                <a href="http://">New Items</a>
-                <a href="">My Wish List</a>
-                <div class="search-bar">
-                    <input type="text" name="search" id="searchbox" placeholder="Search Products">
-                    <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-                </div>
-                <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                <a href=""><i class="fa fa-user" aria-hidden="true"></i></a>
-            </div>
-        </div>
-    </header>
+    <?php
+    require_once '../Components/header.php';
+    ?>
     <main>
         <div class="pro-container">
             <p class="profile-title">Profile</p>
@@ -57,8 +44,7 @@ require '../../BackEnd/User.php';
                     <div class="edit-profile" id="row-2">
                         <!-- Retriving data from the database -->
                         <?php
-                        $id = 31;
-                        $usrResult = User::getUserInfo($id);
+                        $usrResult = $user->getUserInfo();
                         $row = $usrResult->fetch_assoc();
                         ?>
                         <form action="" method="POST">
@@ -82,7 +68,7 @@ require '../../BackEnd/User.php';
                                 $email = input_cleaner($_POST['email']);
                                 $phnum = input_cleaner($_POST['phnumber']);
                                 $add = input_cleaner($_POST['address']);
-                                User::updateInfo($id, $fn, $ln, $email, $phnum, $add);
+                                $user->updateInfo($fn,$ln,$email,$phnum,$add);
                             }
                             ?>
                         </form>
@@ -103,7 +89,7 @@ require '../../BackEnd/User.php';
                                     echo "Password don't match!";
                                 } else {
                                     $newPass = hash('sha256', $newPass);
-                                    User::updatePassword($id, $oldPass, $newPass);
+                                    User::updatePassword($user->user_id, $oldPass, $newPass);
                                 }
                             }
                             ?>

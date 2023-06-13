@@ -72,27 +72,27 @@ class User
     }
 
 
-    public static function getUserInfo($id)
+    public function getUserInfo()
     {
         require 'config.php';
-        $sql = 'SELECT * FROM customer WHERE customer_id =' . $id . '';
+        $sql = 'SELECT * FROM customer WHERE customer_id =' . $this->user_id . '';
         $result = mysqli_query($conn, $sql);
         return $result;
     }
-    public static function updateInfo($id, $fn, $ln, $email, $phno, $add)
+    public function updateInfo($fn, $ln, $email, $phno, $add)
     {
         require 'config.php';
-        $sql = 'UPDATE customer 
+        $sql = "UPDATE customer 
         SET first_name = ?,
             last_name = ?,
             phone_number = ?,
             email = ?,
             address = ?
-        WHERE customer_id = ?';
+        WHERE customer_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssissi', $fn, $ln, $phno, $email, $add, $id);
+        $stmt->bind_param('ssissi', $fn, $ln, $phno, $email, $add, $this->user_id);
         if ($stmt->execute()) {
-            echo 'Information updated successfully.';
+            echo 'Information updated successfully. Reload the page to confirm';
         }
     }
     public static function updatePassword($id, $oldPass, $newPass)
@@ -120,19 +120,82 @@ class User
             echo 'The old password is not correct.';
         }
     }
-    public static function contactAdmin($id, $email, $message)
+    public function contactAdmin($email, $message)
     {
         require 'config.php';
         $sql = 'INSERT INTO message (customer_id,email,message)
                             VALUES(?,?,?)';
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('iss', $id, $email, $message);
+        $stmt->bind_param('iss', $this->user_id, $email, $message);
         if ($stmt->execute()) {
             echo 'Message sent.';
         } else {
             echo 'Failed to send your message, Please try again later.';
         }
     }
-
+    public function getProducts($category){
+        require 'config.php';
+        $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+        INNER JOIN(
+                    SELECT product_id, url
+                    FROM image
+                    GROUP BY product_id
+        ) AS i ON p.product_id = i.product_id
+        WHERE cat = '$category' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC";
+        $result = mysqli_query($conn,$sql);
+        return $result;
+    }
+    public function topRated(){
+        require 'config.php';
+        $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
+        INNER JOIN(
+                    SELECT product_id, url
+                    FROM image
+                    GROUP BY product_id
+        ) AS i ON p.product_id = i.product_id
+        WHERE p.rating > 3 AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC";
+        $result = mysqli_query($conn,$sql);
+        return $result;
+    }
+    public function search($search,$srt){
+        require 'config.php';
+        $sql = '';
+        switch($srt){
+            case '':
+                $sql = "SELECT p.product_id, p.product_name, p.price, p.rating, i.url
+                FROM product AS p
+                INNER JOIN (
+                    SELECT product_id, url
+                    FROM image
+                    GROUP BY product_id
+                ) AS i ON p.product_id = i.product_id
+                WHERE MATCH(p.product_name) AGAINST('$search') AND p.stock > 1 AND p.active = 1";  
+                break;
+            case 'price':
+                $sql = "SELECT p.product_id, p.product_name, p.price, p.rating, i.url
+                FROM product AS p
+                INNER JOIN (
+                    SELECT product_id, url
+                    FROM image
+                    GROUP BY product_id
+                ) AS i ON p.product_id = i.product_id
+                WHERE MATCH(p.product_name) AGAINST('$search') AND p.stock > 1 AND p.active = 1
+                 ORDER BY price ASC"; 
+                break; 
+            case 'rate':
+                $sql = "SELECT p.product_id, p.product_name, p.price, p.rating, i.url
+                FROM product AS p
+                INNER JOIN (
+                    SELECT product_id, url
+                    FROM image
+                    GROUP BY product_id
+                ) AS i ON p.product_id = i.product_id
+                WHERE MATCH(p.product_name) AGAINST('$search') AND p.stock > 1 AND p.active = 1
+                 ORDER BY rating DESC"; 
+                break; 
+        }
+        $result = mysqli_query($conn,$sql);
+        return $result;
+    }
 }
 ?>

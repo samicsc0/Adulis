@@ -1,6 +1,7 @@
 <?php
 require_once '../../BackEnd/Session/usersession.php';
-$customer_id = $_SESSION['customer_id'];
+require_once '../../BackEnd/User.php';
+$user = new User($_SESSION['customer_id'],$_SESSION['email']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,18 +27,18 @@ $customer_id = $_SESSION['customer_id'];
                 <?php
                 require_once '../../BackEnd/Cart.php';
                 $cart = new Cart();
-                $res = $cart->getMyCart($customer_id);
+                $res = $cart->getMyCart($user->user_id);
                 while($row = $res->fetch_assoc()){
                     echo '<div class="cart-detail">
                     <img src="'.$row['url'].'"alt="">
                     <p class="product-name">'.$row['product_name'].'</p>
                     <div class="quantity-sec">
-                        <a href="../../BackEnd/cartprocessor.php?request=dec&item='.$row['item_id'].'" class="increase">&minus;</a>
+                        <a href="../../BackEnd/Services/cartprocessor.php?request=dec&item='.$row['item_id'].'" class="increase">&minus;</a>
                         <p class="quantity">'.$row['quantity'].'</p>
-                        <a href="../../BackEnd/cartprocessor.php?request=inc&item='.$row['item_id'].'" class="decrease">&plus;</a>
+                        <a href="../../BackEnd/Services/cartprocessor.php?request=inc&item='.$row['item_id'].'" class="decrease">&plus;</a>
                     </div>
                     <p class="price">'.$row['price'].'</p>
-                    <a href="../../BackEnd/cartprocessor.php?request=rem&item='.$row['item_id'].'" class="remove-cart">&#10761;</a>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=rem&item='.$row['item_id'].'" class="remove-cart">&#10761;</a>
                 </div>';
                 }
                 ?>

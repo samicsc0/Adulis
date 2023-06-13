@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+require_once '../../BackEnd/Session/usersession.php';
+require_once '../../BackEnd/User.php';
+$user = new User($_SESSION['customer_id'], $_SESSION['email']);
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -11,71 +16,40 @@
 </head>
 
 <body>
-    <header>
-        <div class="header">
-            <div class="logo">
-                <img src="../Assets/img/adulislogo1000.png" alt="Adulis Logo">
-            </div>
-            <div class="options">
-                <a href="http://">Categories</a>
-                <a href="http://">New Items</a>
-                <a href="">My Wish List</a>
-                <div class="search-bar">
-                    <input type="text" name="search" id="searchbox" placeholder="Search Products">
-                    <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-                </div>
-                <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                <a href=""><i class="fa fa-user" aria-hidden="true"></i></a>
-            </div>
-        </div>
-
-        <div class="mobile-header">
-            <img src="../Assets/img/adulislogo1000.png" alt="">
-            <a onclick="toggler()"><i class="fa fa-bars toggle-btn" aria-hidden="true"></i></a>
-        </div>
-        <div class="content-mobile-header" id="mobmen">
-            <a href="http://">Categories</a>
-            <a href="http://">New Items</a>
-            <a href="">My Wish List</a>
-            <div class="search-bar">
-                <input type="text" name="search" id="searchbox" placeholder="Search Products">
-                <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-            </div>
-            <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Cart</a>
-            <a href=""><i class="fa fa-user" aria-hidden="true"></i>&nbsp; Profile</a>
-        </div>
-    </header>
+    <?php
+    require_once '../Components/header.php';
+    ?>
     <main>
         <div class="cat-container">
             <p class="cat-title">Categories</p>
             <div class="cat-wrapper">
                 <div class="cat-detail">
                     <img src="../Assets/img/iph.jpg" alt="">
-                    <p class="product-cat">Phones & Tablets</p>
+                    <a href="lists.php?cat=1" class="product-cat">Phones & Tablets</a>
                 </div>
                 <div class="cat-detail">
                     <img src="../Assets/img/iph.jpg" alt="">
-                    <p class="product-cat">TV & Monitors</p>
+                    <a href="lists.php?cat=2" class="product-cat">TV & Monitors</a>
                 </div>
                 <div class="cat-detail">
                     <img src="../Assets/img/iph.jpg" alt="">
-                    <p class="product-cat">Desktop & Laptop Computers</p>
+                    <a href="lists.php?cat=3" class="product-cat">Desktop & Laptop Computers</a>
                 </div>
                 <div class="cat-detail">
                     <img src="../Assets/img/iph.jpg" alt="">
-                    <p class="product-cat">Accessories</p>
+                    <a href="lists.php?cat=4" class="product-cat">Accessories</a>
                 </div>
                 <div class="cat-detail">
                     <img src="../Assets/img/iph.jpg" alt="">
-                    <p class="product-cat">Shoes</p>
+                    <a href="lists.php?cat=5" class="product-cat">Shoes</a>
                 </div>
                 <div class="cat-detail">
                     <img src="../Assets/img/iph.jpg" alt="">
-                    <p class="product-cat">Books</p>
+                    <a href="lists.php?cat=6" class="product-cat">Books</a>
                 </div>
                 <div class="cat-detail">
                     <img src="../Assets/img/iph.jpg" alt="">
-                    <p class="product-cat">Personal Care & Beauty</p>
+                    <a href="lists.php?cat=7" class="product-cat">Personal Care & Beauty</a>
                 </div>
             </div>
         </div>

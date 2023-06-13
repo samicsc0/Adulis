@@ -539,6 +539,8 @@ footer ul a:hover {
 
 .cat-container .cat-detail .product-cat {
     align-self: center;
+    text-decoration: none;
+    color: #000;
 }
 
 .cat-container .cat-detail:hover {
