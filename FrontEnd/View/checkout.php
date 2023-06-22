@@ -1,68 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+require_once '../../BackEnd/Session/usersession.php';
+require_once '../../BackEnd/User.php';
+require_once '../../BackEnd/Cart.php';
+$user = new User($_SESSION['customer_id'], $_SESSION['email']);
+$cart = new Cart($user->user_id);
+?>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <title>Checkout</title>
 </head>
 
 <body>
-    <header>
-        <div class="header">
-            <div class="logo">
-                <img src="../Assets/img/adulislogo1000.png" alt="Adulis Logo">
-            </div>
-            <div class="options">
-                <a href="http://">Categories</a>
-                <a href="http://">New Items</a>
-                <a href="">My Wish List</a>
-                <div class="search-bar">
-                    <input type="text" name="search" id="searchbox" placeholder="Search Products">
-                    <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-                </div>
-                <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                <a href=""><i class="fa fa-user" aria-hidden="true"></i></a>
-            </div>
-        </div>
-
-        <div class="mobile-header">
-            <img src="../Assets/img/adulislogo1000.png" alt="">
-            <a onclick="toggler()"><i class="fa fa-bars toggle-btn" aria-hidden="true"></i></a>
-        </div>
-        <div class="content-mobile-header" id="mobmen">
-            <a href="http://">Categories</a>
-            <a href="http://">New Items</a>
-            <a href="">My Wish List</a>
-            <div class="search-bar">
-                <input type="text" name="search" id="searchbox" placeholder="Search Products">
-                <a href=""><i class="fa fa-search search-btn" aria-hidden="true"></i></a>
-            </div>
-            <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; Cart</a>
-            <a href=""><i class="fa fa-user" aria-hidden="true"></i>&nbsp; Profile</a>
-        </div>
-    </header>
+    <?php
+    require_once '../Components/header.php';
+    require_once '../../BackEnd/Cart.php';
+    ?>
     <main>
         <div class="checkout-container">
             <p class="checkout-title">Check Out</p>
             <div class="checkout-wrapper">
                 <div class=" col col-1">
+                    <?php
+                        $res = $user->getUserInfo();
+                        $row = $res->fetch_assoc(); 
+                        $cart->checkCart($cart->returnCartId());
+                        $_SESSION['total_price'] = $cart->getCartPrice($cart->returnCartId());
+                    ?>
                     <p class="title">Delivery Information</p>
-                    <p class="detail"><span>Name: </span>Samuel Zewde</p>
-                    <p class="detail"><span>Address: </span>XPW2+V96 Addis Ababa</p>
-                    <p class="detail"><span>Mobile: </span>+251944263239</p>
-                    <p class="detail"><span>Email: </span>samuelzewde29@gmail.com</p>
+                    <p class="detail"><span>Name: </span><?=$row['first_name'] . ' ' .$row['last_name'];?></p>
+                    <p class="detail"><span>Address: </span><?=$row['address']?></p>
+                    <p class="detail"><span>Mobile: </span><?=$row['phone_number']?></p>
+                    <p class="detail"><span>Email: </span><?=$row['email']?></p>
                 </div>
                 <div class="col col-2">
                     <div class="row-1">
                         <p class="tot-title">Total Price</p>
-                        <p class="total-price">1000 Birr</p>
+                        <p class="total-price"><?=$_SESSION['total_price'];?> Birr</p>
                     </div>
                     <div class="row-2">
-                        <a href="" class="pay-btn">Process Payment</a>
+                        <a href="../../BackEnd/Services/finishordering.php" class="pay-btn">Process Payment</a>
                     </div>
                 </div>
             </div>

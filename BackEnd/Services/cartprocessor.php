@@ -3,25 +3,27 @@ require_once '../config.php';
 require_once '../Seller.php';
 require_once '../Session/usersession.php';
 require_once '../Cart.php';
+require_once '../User.php';
 $req = $_GET['request'];
 $itemid = $_GET['item'];
-$user_id = $_SESSION['customer_id'];
-$cart = new Cart();
-$cartid = $cart->returnCartId($user_id);
+$user = new User($_SESSION['customer_id'], $_SESSION['email']);
+$cart = new Cart($user->user_id);
+$cartid = $cart->returnCartId();
 switch ($req) {
     case 'add':
-        if (!$cart->cartItemExist($user_id, $itemid)) {
-            $result = Seller::getProduct($itemid);
-            $row = $result->fetch_assoc();
+        if (!$cart->cartItemExist($itemid)) {
+            $row = Seller::getProduct($itemid);
             $price = $row['price'];
-            $cart->addToCart($user_id, $itemid, $price);
+            $cart->addToCart($itemid, $price);
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+            exit();
         } else {
-            header('location: ../../FrontEnd/View/index.php');
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+            exit();
         }
-        break;
     case 'rem':
         $cart->removeCartItem($itemid);
-        header('location: ../../FrontEnd/View/cart.php');
+        header("Location: " . $_SERVER['HTTP_REFERER']);
         break;
     case 'inc':
         $current_quant = $cart->cartItem($itemid);
@@ -32,9 +34,9 @@ switch ($req) {
             $new_quan = $current_quant + 1;
             $new_price = $pr_price * $new_quan;
             $cart->updateCart($itemid, $new_quan, $new_price);
-            header('location: ../../FrontEnd/View/cart.php');
+            header("Location: " . $_SERVER['HTTP_REFERER']);
         } else {
-            header('location: ../../FrontEnd/View/cart.php');
+            header("Location: " . $_SERVER['HTTP_REFERER']);
         }
         break;
     case 'dec':
@@ -45,9 +47,9 @@ switch ($req) {
             $new_quan = $current_quant - 1;
             $new_price = $pr_price * $new_quan;
             $cart->updateCart($itemid, $new_quan, $new_price);
-            header('location: ../../FrontEnd/View/cart.php');
+            header("Location: " . $_SERVER['HTTP_REFERER']);
         } else {
-            header('location: ../../FrontEnd/View/cart.php');
+            header("Location: " . $_SERVER['HTTP_REFERER']);
         }
         break;
 }

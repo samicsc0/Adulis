@@ -114,6 +114,10 @@ main {
     flex-direction: column;
     gap: 20px;
 }
+.item-desc a{
+    text-decoration: none;
+    color: #000;
+}
 
 .item-desc .item-img {
     width: 100%;
@@ -447,6 +451,10 @@ footer ul a:hover {
     padding: 20px 0px;
     border-bottom: 1px solid #0000005a;
     margin-bottom: 10px;
+}
+.pro-container .hist-row .rate-btn{
+    text-decoration: none;
+    color: #000;
 }
 
 .pro-container .edit-profile {
@@ -859,6 +867,10 @@ footer ul a:hover {
 .search-container .search-result img {
     width: 80px;
 }
+.search-result a{
+    text-decoration: none;
+    color: #000;
+}
 
 /*Business Registration Style */
 .licencebiz {
@@ -884,7 +896,6 @@ footer ul a:hover {
     text-decoration: none;
     color: #000;
 }
-
 
 .business-man-container {
     display: flex;
@@ -1353,6 +1364,43 @@ hr {
 .sales-report-container img {
     width: 80px;
 }
+/*Style for page rating*/
+.rating-container .title{
+    font-size: 1.8rem;
+}
+.rating-container{
+    width: 70%;
+    margin:20px  auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.rating-container form{
+    margin: auto;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.rating-container form output{
+    align-self: center;
+}
+.rating-container form input[type ='submit']{
+    align-self: center;
+    padding: 10px 40px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    border: 1px #000 solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.rating-container form input[type ='submit']:hover{
+    background-color: #0BAB0A;
+    color: #fff;
+}
+
 
 /* Reponsive Code */
 header .mobile-header {

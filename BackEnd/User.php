@@ -1,5 +1,4 @@
 <?php
-
 class User
 {
     public $user_id;
@@ -22,6 +21,75 @@ class User
         }
         $stmt->close();
         $conn->close();
+    }
+    public static function checkEmail($email)
+    {
+        require 'config.php';
+        $sql = "SELECT * FROM customer WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if (mysqli_num_rows($result) === 1) {
+            return true;
+        } else {
+            echo "Couldn't find your email account.";
+            return false;
+        }
+    }
+    public static function insertIntoreset($email, $pin)
+    {
+        require 'config.php';
+        $encpin = hash("sha256", $pin);
+        $sql = "INSERT INTO passwordrest (email, pin) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $email, $encpin);
+        $result = $stmt->execute();
+        if ($result) {
+            if (User::sendemail($email, "Adulis: Password reset code", "Your reset pin is: $pin")) {
+                return true;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static function sendemail($email, $subject, $content)
+    {
+        if (mail($email, $subject, $content)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public static function checkResetCode($email, $pin)
+    {
+        require 'config.php';
+        $sql = "SELECT * FROM passwordrest WHERE email = '$email' ORDER BY id DESC LIMIT 1";
+        $res = mysqli_query($conn, $sql);
+        if ($res == false) {
+            return false;
+        } else {
+            $row = $res->fetch_assoc();
+            if (hash_equals($pin,$row['pin'])) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public static function updateForgPassword($email, $passwd)
+    {
+        require 'config.php';
+        $sql = "UPDATE customer 
+                SET password = '$passwd'
+                WHERE email = '$email'";
+        if (mysqli_query($conn, $sql)) {
+            echo 'Password updated successfully.<a href="login.php">Click here to login</a>';
+        } else {
+            echo 'Password reset failed, Please try again later';
+        }
     }
     public static function login($email, $password)
     {
@@ -72,6 +140,7 @@ class User
     }
 
 
+
     public function getUserInfo()
     {
         require 'config.php';
@@ -95,12 +164,12 @@ class User
             echo 'Information updated successfully. Reload the page to confirm';
         }
     }
-    public static function updatePassword($id, $oldPass, $newPass)
+    public function updatePassword($oldPass, $newPass)
     {
         require 'config.php';
         $sql = 'SELECT password FROM customer WHERE customer_id = ?';
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id);
+        $stmt->bind_param('i', $this->user_id);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
@@ -110,7 +179,7 @@ class User
             SET password = ?
             WHERE customer_id = ?';
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('si', $newPass, $id);
+            $stmt->bind_param('si', $newPass, $this->user_id);
             if ($stmt->execute()) {
                 echo 'Password updated successfully.';
             } else {
@@ -133,7 +202,8 @@ class User
             echo 'Failed to send your message, Please try again later.';
         }
     }
-    public function getProducts($category){
+    public static function getProducts($category)
+    {
         require 'config.php';
         $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
         INNER JOIN(
@@ -141,11 +211,12 @@ class User
                     FROM image
                     GROUP BY product_id
         ) AS i ON p.product_id = i.product_id
-        WHERE cat = '$category' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC";
-        $result = mysqli_query($conn,$sql);
+        WHERE cat = '$category' AND p.stock > 0 AND p.active = 1 ORDER BY p.product_id DESC";
+        $result = mysqli_query($conn, $sql);
         return $result;
     }
-    public function topRated(){
+    public static function topRated()
+    {
         require 'config.php';
         $sql = "SELECT p.product_id,p.product_name, p.price,p.main_description,p.rating, i.url FROM product AS p
         INNER JOIN(
@@ -153,14 +224,15 @@ class User
                     FROM image
                     GROUP BY product_id
         ) AS i ON p.product_id = i.product_id
-        WHERE p.rating > 3 AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC";
-        $result = mysqli_query($conn,$sql);
+        WHERE p.rating > 3 AND p.stock > 0 AND p.active = 1 ORDER BY p.product_id DESC";
+        $result = mysqli_query($conn, $sql);
         return $result;
     }
-    public function search($search,$srt){
+    public static function search($search, $srt)
+    {
         require 'config.php';
         $sql = '';
-        switch($srt){
+        switch ($srt) {
             case '':
                 $sql = "SELECT p.product_id, p.product_name, p.price, p.rating, i.url
                 FROM product AS p
@@ -169,7 +241,7 @@ class User
                     FROM image
                     GROUP BY product_id
                 ) AS i ON p.product_id = i.product_id
-                WHERE MATCH(p.product_name) AGAINST('$search') AND p.stock > 1 AND p.active = 1";  
+                WHERE MATCH(p.product_name) AGAINST('$search') AND p.stock > 0 AND p.active = 1";
                 break;
             case 'price':
                 $sql = "SELECT p.product_id, p.product_name, p.price, p.rating, i.url
@@ -179,9 +251,9 @@ class User
                     FROM image
                     GROUP BY product_id
                 ) AS i ON p.product_id = i.product_id
-                WHERE MATCH(p.product_name) AGAINST('$search') AND p.stock > 1 AND p.active = 1
-                 ORDER BY price ASC"; 
-                break; 
+                WHERE MATCH(p.product_name) AGAINST('$search') AND p.stock > 0 AND p.active = 1
+                 ORDER BY price ASC";
+                break;
             case 'rate':
                 $sql = "SELECT p.product_id, p.product_name, p.price, p.rating, i.url
                 FROM product AS p
@@ -190,12 +262,116 @@ class User
                     FROM image
                     GROUP BY product_id
                 ) AS i ON p.product_id = i.product_id
-                WHERE MATCH(p.product_name) AGAINST('$search') AND p.stock > 1 AND p.active = 1
-                 ORDER BY rating DESC"; 
-                break; 
+                WHERE MATCH(p.product_name) AGAINST('$search') AND p.stock > 0 AND p.active = 1
+                 ORDER BY rating DESC";
+                break;
         }
-        $result = mysqli_query($conn,$sql);
+        $result = mysqli_query($conn, $sql);
         return $result;
+    }
+    public function order($cart_id)
+    {
+        require 'config.php';
+        $sql_cart = "SELECT * FROM cartitem WHERE cart_id = $cart_id";
+        $result = mysqli_query($conn, $sql_cart);
+        while ($row = $result->fetch_assoc()) {
+            $prid = $row['product_id'];
+            $quan = $row['quantity'];
+            $price = $row['price'];
+            $sql_insert = "INSERT INTO orders(customer_id,product_id,cart_id,quantity, price)
+                                       VALUES($this->user_id,$prid,$cart_id,$quan,$price)";
+            mysqli_query($conn, $sql_insert);
+            $this->updatestock($prid, $quan);
+        }
+    }
+    public function updatestock($product_id, $orderStock)
+    {
+        require 'config.php';
+        $sql = "UPDATE product 
+                SET stock = stock - $orderStock
+                WHERE product_id = $product_id";
+        mysqli_query($conn, $sql);
+    }
+    public function getMyOrders()
+    {
+        require 'config.php';
+        $sql = "SELECT o.order_id, o.product_id, o.quantity, o.price, o.buyer_status, p.product_name FROM orders o 
+        JOIN product p ON o.product_id = p.product_id 
+        WHERE o.buyer_status = 0 and o.customer_id = $this->user_id";
+        $res = mysqli_query($conn, $sql);
+        return $res;
+    }
+    public function getProductById($prid)
+    {
+        require 'config.php';
+        $sql = "SELECT p.product_id, p.product_name, p.price, p.rating, i.url
+        FROM product AS p
+        INNER JOIN (
+            SELECT product_id, url
+            FROM image
+            GROUP BY product_id
+        ) AS i ON p.product_id = i.product_id WHERE p.product_id = $prid";
+        $res = mysqli_query($conn, $sql);
+        return $res->fetch_assoc();
+    }
+    public function setAverageRating($prid)
+    {
+        require 'config.php';
+        $sql = "SELECT rating FROM ratings WHERE product_id  = $prid";
+        $res = mysqli_query($conn, $sql);
+        $num_row = mysqli_num_rows($res);
+        $total = 0;
+        while ($row = $res->fetch_assoc()) {
+            $total += $row['rating'];
+        }
+        $av = $total / $num_row;
+        $sql_update = "UPDATE product SET rating = $av WHERE product_id = $prid";
+        mysqli_query($conn, $sql_update);
+    }
+    public function getTotalRatings($prid)
+    {
+        require 'config.php';
+        $sql = "SELECT rating FROM ratings WHERE product_id  = $prid";
+        $res = mysqli_query($conn, $sql);
+        $num_row = mysqli_num_rows($res);
+        return $num_row;
+    }
+    public function prevRateCheck($prid)
+    {
+        require 'config.php';
+        $sql = "SELECT * FROM ratings WHERE product_id = $prid AND customer_id = $this->user_id";
+        $res = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($res) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function rateproduct($prid, $rate)
+    {
+        require 'config.php';
+        if ($this->prevRateCheck($prid)) {
+            if ($rate >= 0 && $rate <= 5) {
+                $sql = "INSERT INTO ratings(customer_id,product_id,rating)
+                            VALUES($this->user_id,$prid,$rate)";
+                mysqli_query($conn, $sql);
+                $this->setAverageRating($prid);
+                header('location: ../../FrontEnd/View/profile.php');
+            } else {
+                echo 'Failed to submit your rating.';
+            }
+        } else {
+            echo "You can't rate a product multiple times.";
+        }
+    }
+    public function markasDelivered($item_id)
+    {
+        require 'config.php';
+        $sql = "UPDATE orders
+                SET buyer_status = 1
+                WHERE order_id = $item_id";
+        mysqli_query($conn, $sql);
+        header('location: ');
     }
 }
 ?>

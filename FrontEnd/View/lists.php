@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once '../../BackEnd/Session/usersession.php';
 require_once '../../BackEnd/User.php';
-$user = new User($_SESSION['customer_id'],$_SESSION['email']);
+if (isset($_SESSION['customer_id']) && isset($_SESSION['email'])) {
+  $user = new User($_SESSION['customer_id'], $_SESSION['email']);
+}
 ?>
 
 <head>
@@ -11,6 +12,7 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style/style.css">
+  <link rel="icon" href="../Assets/img/adulislogo1000.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
@@ -29,39 +31,39 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
     switch ($listing_type) {
       case 1:
         $listing = "Phone & Tablets";
-        $res = $user->getProducts("Phone n Tablets");
+        $res = User::getProducts("Phone n Tablets");
         break;
       case 2:
         $listing = "TV & Monitors";
-        $res = $user->getProducts("TV n Monitors");
+        $res = User::getProducts("TV n Monitors");
         break;
       case 3:
         $listing = "Desktop & Laptop Computers";
-        $res = $user->getProducts("Desktop n Laptop Computers");
+        $res = User::getProducts("Desktop n Laptop Computers");
         break;
       case 4:
         $listing = "Accessories";
-        $res = $user->getProducts("Accessories");
+        $res = User::getProducts("Accessories");
         break;
       case 5:
         $listing = "Shoes";
-        $res = $user->getProducts("Shoes");
+        $res = User::getProducts("Shoes");
         break;
       case 6:
         $listing = "Books";
-        $res = $user->getProducts("Books");
+        $res = User::getProducts("Books");
         break;
       case 7:
         $listing = "Personal Care & Beauty";
-        $res = $user->getProducts("Personal Care n Beauty");
+        $res = User::getProducts("Personal Care n Beauty");
         break;
       case 8:
         $listing = "Top Rated Items";
-        $res = $user->topRated();
+        $res = User::topRated();
         break;
       case 9:
         $listing = "Unsorted Items";
-        $res = $user->getProducts("Unsorted");
+        $res = User::getProducts("Unsorted");
         break;
       default:
         header('location: index.php');
@@ -81,7 +83,7 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
               <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">' . $row['product_name'] . '</p>
+                <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
                   <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
@@ -97,7 +99,7 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
         }
         echo '</span><span>(300)</span>
                     </p>
-                    <a href="../../BackEnd/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
                 </div>

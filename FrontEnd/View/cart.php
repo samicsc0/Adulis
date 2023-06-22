@@ -11,13 +11,13 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <title>Cart</title>
 </head>
 
 <body>
     <?php
-    require_once '../../BackEnd/Session/usersession.php';
     require_once '../Components/header.php';
     ?>
     <main>
@@ -26,8 +26,8 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
             <div class="cart-wrapper">
                 <?php
                 require_once '../../BackEnd/Cart.php';
-                $cart = new Cart();
-                $res = $cart->getMyCart($user->user_id);
+                $cart = new Cart($user->user_id);
+                $res = $cart->getMyCart();
                 while($row = $res->fetch_assoc()){
                     echo '<div class="cart-detail">
                     <img src="'.$row['url'].'"alt="">
@@ -42,18 +42,7 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
                 </div>';
                 }
                 ?>
-                <!-- <div class="cart-detail">
-                    <img src="../Assets/img/iph.jpg" alt="">
-                    <p class="product-name">iPhone 14 pro</p>
-                    <div class="quantity-sec">
-                        <a href="../../BackEnd/cartprocessor.php?request=dec&item=" class="increase">&minus;</a>
-                        <p class="quantity">10</p>
-                        <a href="" class="decrease">&plus;</a>
-                    </div>
-                    <p class="price">1000</p>
-                    <p class="remove-cart">&#10761;</p>
-                </div> -->
-                <a href="" class="checkout">Check Out</a>
+                <a href="checkout.php" class="checkout">Check Out</a>
             </div>
 
 

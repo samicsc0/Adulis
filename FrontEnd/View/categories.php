@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once '../../BackEnd/Session/usersession.php';
 require_once '../../BackEnd/User.php';
-$user = new User($_SESSION['customer_id'], $_SESSION['email']);
+if (isset($_SESSION['customer_id']) && isset($_SESSION['email'])) {
+    $user = new User($_SESSION['customer_id'], $_SESSION['email']);
+}
 ?>
 
 <head>
@@ -12,6 +13,7 @@ $user = new User($_SESSION['customer_id'], $_SESSION['email']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories</title>
     <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 </head>
 
@@ -28,27 +30,27 @@ $user = new User($_SESSION['customer_id'], $_SESSION['email']);
                     <a href="lists.php?cat=1" class="product-cat">Phones & Tablets</a>
                 </div>
                 <div class="cat-detail">
-                    <img src="../Assets/img/iph.jpg" alt="">
+                    <img src="../Assets/img/tv.jpg" alt="">
                     <a href="lists.php?cat=2" class="product-cat">TV & Monitors</a>
                 </div>
                 <div class="cat-detail">
-                    <img src="../Assets/img/iph.jpg" alt="">
+                    <img src="../Assets/img/desktop.jpg" alt="">
                     <a href="lists.php?cat=3" class="product-cat">Desktop & Laptop Computers</a>
                 </div>
                 <div class="cat-detail">
-                    <img src="../Assets/img/iph.jpg" alt="">
+                    <img src="../Assets/img/access.jpg" alt="">
                     <a href="lists.php?cat=4" class="product-cat">Accessories</a>
                 </div>
                 <div class="cat-detail">
-                    <img src="../Assets/img/iph.jpg" alt="">
+                    <img src="../Assets/img/shoe.jpg" alt="">
                     <a href="lists.php?cat=5" class="product-cat">Shoes</a>
                 </div>
                 <div class="cat-detail">
-                    <img src="../Assets/img/iph.jpg" alt="">
+                    <img src="../Assets/img/books.jpg" alt="">
                     <a href="lists.php?cat=6" class="product-cat">Books</a>
                 </div>
                 <div class="cat-detail">
-                    <img src="../Assets/img/iph.jpg" alt="">
+                    <img src="../Assets/img/beauty.jpg" alt="">
                     <a href="lists.php?cat=7" class="product-cat">Personal Care & Beauty</a>
                 </div>
             </div>

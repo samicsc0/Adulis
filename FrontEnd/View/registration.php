@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <title>Adulis Registration</title>
 </head>
 
@@ -22,7 +23,6 @@
                         <input type="tel" name="phonenumber" id="phonenumber" placeholder="Phone Number" required>
                         <input type="email" name="email" id="email" placeholder="E-mail" required>
                         <input type="text" name="address" id="address" placeholder="Address" required>
-                        <a href="" class="locatme">locate me</a>
                         <input type="password" name="password" id="password" placeholder="Password" required>
                         <input type="password" name="confirm_password" id="confirm_password"
                             placeholder="Confirm Password" required>
@@ -38,13 +38,21 @@
                             $address = input_cleaner($_POST['address']);
                             $password = $_POST['password'];
                             $conpassword = $_POST['confirm_password'];
-                            if ($password != $conpassword) {
-                                echo "Password Don't Match!";
+                            if (validateEmail($email)) {
+                                if (validatePassword($password)) {
+                                    if ($password != $conpassword) {
+                                        echo "Password Don't Match!";
+                                    } else {
+                                        $password = hash("sha256", $password);
+                                        User::register($firstname, $lastname, $phnumber, $email, $address, $password);
+                                    }
+                                }else{
+                                    echo 'Password must be at least 8 characters.';
+                                }
                             } else {
-                                $password = hash("sha256", $password);
-                                $user = new User($firstname, $lastname, $phnumber, $email, $address, $password);
-                                $user->register();
+                                echo 'Invalid Email';
                             }
+
                         }
 
                         ?>

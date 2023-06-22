@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once '../../BackEnd/Session/usersession.php';
 require_once '../../BackEnd/User.php';
-$user = new User($_SESSION['customer_id'], $_SESSION['email']);
+if (isset($_SESSION['customer_id']) && isset($_SESSION['email'])) {
+    $user = new User($_SESSION['customer_id'], $_SESSION['email']);
+}
 ?>
 
 <head>
@@ -12,6 +13,7 @@ $user = new User($_SESSION['customer_id'], $_SESSION['email']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <title>Search Result</title>
 </head>
 
@@ -22,12 +24,13 @@ $user = new User($_SESSION['customer_id'], $_SESSION['email']);
     <main>
         <div class="search-container">
             <?php
-            $search_query = $_GET['search'];
+            require 'inputcleaner.php';
+            $search_query = input_cleaner($_GET['search']);
             $srt = '';
             if (isset($_GET['srt'])) {
                 $srt = $_GET['srt'];
             }
-            $res = $user->search($search_query, $srt);
+            $res = User::search($search_query, $srt);
             ?>
             <p class="search-title">Results for
                 <?= $search_query ?> ...
@@ -49,7 +52,7 @@ $user = new User($_SESSION['customer_id'], $_SESSION['email']);
                     while ($row = $res->fetch_assoc()) {
                         echo '<div class="search-result">
                     <img src="' . $row['url'] . '" alt="">
-                    <p class="pr-name">' . $row['product_name'] . '</p>
+                    <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="pr-name">' . $row['product_name'] . '</p></a>
                     <p class="rating">';
                         $rating = $row['rating'];
                         for ($i = 1; $i <= 5; $i++) {

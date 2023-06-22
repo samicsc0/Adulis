@@ -5,20 +5,30 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adulis - Ethiopian E-commerce</title>
+  <meta name="description"
+    content="Adulis is a leading Ethiopian e-commerce website where businesses can list their products for customers to browse and order. We offer a wide range of Ethiopian products, including Mobiles and Tablets, Books, Computers, and more. Shop with Adulis and experience the best of Ethiopia online.">
+  <meta name="keywords"
+    content="Adulis, Ethiopian e-commerce, Ethiopian products, online shopping, browse products, order products">
   <link rel="stylesheet" href="../style/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <link rel="icon" href="../Assets/img/adulislogo1000.png">
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <title>Adulis | Ethiopian Ecommerce Website</title>
 </head>
 
 <body>
   <?php
-    require_once '../../BackEnd/Session/usersession.php';
-    require_once '../Components/header.php'; 
-    require_once '../../BackEnd/User.php';
-    require_once '../../BackEnd/Cart.php';
-    $user = new User($_SESSION['customer_id'],$_SESSION['email']);
+  require_once '../Components/header.php';
+  require_once '../../BackEnd/User.php';
+  require_once '../../BackEnd/Cart.php';
+  require_once '../../BackEnd/User.php';
+  if (isset($_SESSION['customer_id']) && isset($_SESSION['email'])) {
+    $user = new User($_SESSION['customer_id'], $_SESSION['email']);
+  }
   ?>
   <main>
     <div class="swiper mySwiper banner">
@@ -46,8 +56,8 @@
     </div>
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Phone & Tablets &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=1"><i
-            class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">Phone & Tablets &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=1"><i class="fa fa-arrow-right"
+            aria-hidden="true"></i>
         </a>
       </p>
 
@@ -63,7 +73,7 @@
                         FROM image
                         GROUP BY product_id
             ) AS i ON p.product_id = i.product_id
-            WHERE cat = 'Phone n Tablets' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+            WHERE cat = 'Phone n Tablets' AND p.stock > 0 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
           $result = mysqli_query($conn, $sql);
           while ($row = $result->fetch_assoc()) {
             echo '<div class="swiper-slide">
@@ -71,7 +81,7 @@
               <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">' . $row['product_name'] . '</p>
+                  <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
                   <p class="price">' . $row['price'] . ' Birr</p>
                 </div>
                 <div class="row-2">
@@ -103,8 +113,8 @@
 
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">TV & Monitors &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=2"><i
-            class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">TV & Monitors &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=2"><i class="fa fa-arrow-right"
+            aria-hidden="true"></i>
         </a>
       </p>
 
@@ -118,7 +128,7 @@
                         FROM image
                         GROUP BY product_id
             ) AS i ON p.product_id = i.product_id
-            WHERE cat = 'TV n Monitors' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+            WHERE cat = 'TV n Monitors' AND p.stock > 0 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
           $result = mysqli_query($conn, $sql);
           while ($row = $result->fetch_assoc()) {
             echo '<div class="swiper-slide">
@@ -126,7 +136,7 @@
               <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">' . $row['product_name'] . '</p>
+                <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
                   <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
@@ -172,7 +182,7 @@
                         FROM image
                         GROUP BY product_id
             ) AS i ON p.product_id = i.product_id
-            WHERE cat = 'Desktop n Laptop Computers' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+            WHERE cat = 'Desktop n Laptop Computers' AND p.stock > 0 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
           $result = mysqli_query($conn, $sql);
           while ($row = $result->fetch_assoc()) {
             echo '<div class="swiper-slide">
@@ -180,7 +190,7 @@
               <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">' . $row['product_name'] . '</p>
+                <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
                   <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
@@ -212,8 +222,8 @@
     </div>
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Accessories &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=4"><i
-            class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">Accessories &nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=4"><i class="fa fa-arrow-right"
+            aria-hidden="true"></i>
         </a>
       </p>
 
@@ -228,7 +238,7 @@
                         FROM image
                         GROUP BY product_id
             ) AS i ON p.product_id = i.product_id
-            WHERE cat = 'Accessories' AND p.stock > 1 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
+            WHERE cat = 'Accessories' AND p.stock > 0 AND p.active = 1 ORDER BY p.product_id DESC LIMIT 10";
           $result = mysqli_query($conn, $sql);
           while ($row = $result->fetch_assoc()) {
             echo '<div class="swiper-slide">
@@ -236,7 +246,7 @@
               <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">' . $row['product_name'] . '</p>
+                <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
                   <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
@@ -292,7 +302,7 @@
               <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">' . $row['product_name'] . '</p>
+                <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
                   <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
@@ -346,7 +356,7 @@
               <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">' . $row['product_name'] . '</p>
+                <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
                   <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
@@ -400,7 +410,7 @@
               <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">' . $row['product_name'] . '</p>
+                <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
                   <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">
@@ -431,8 +441,8 @@
     <!---->
 
     <div class="phone-sec list-sec">
-      <p class="sec-title">Unsorted Items&nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=9"><i
-            class="fa fa-arrow-right" aria-hidden="true"></i>
+      <p class="sec-title">Unsorted Items&nbsp;&nbsp;&nbsp;<a href="./lists.php?cat=9"><i class="fa fa-arrow-right"
+            aria-hidden="true"></i>
         </a>
       </p>
 
@@ -454,7 +464,7 @@
               <img src="' . $row['url'] . '"alt="item" class="item-img">
               <div class="desc-sec">
                 <div class="row-1">
-                  <p class="title">' . $row['product_name'] . '</p>
+                <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
                   <p class="price">' . $row['price'] . '</p>
                 </div>
                 <div class="row-2">

@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+require_once '../../BackEnd/Session/sellersession.php';
+require_once '../../BackEnd/Seller.php';
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -7,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <title>Update Product</title>
 </head>
 
@@ -18,11 +23,11 @@
     <main>
         <div class="update-product-container">
             <?php
-            require_once '../../BackEnd/Seller.php';
+
             require 'inputcleaner.php';
             $prid = $_GET['pid'];
-            $result = Seller::getProduct($prid);
-            $row = $result->fetch_assoc();
+            $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
+            $row = Seller::getProduct($prid);
             ?>
             <div class="col-1">
                 <img src="<?= $row['url'] ?>" alt="">
@@ -32,7 +37,8 @@
                     <div class="row-1">
                         <input type="text" name='pname' placeholder="Product Name" value="<?= $row['product_name'] ?>"
                             required>
-                        <a href="../../BackEnd/removeitem.php?pid=<?=$prid?>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a href="../../BackEnd/removeitem.php?pid=<?= $prid ?>"><i class="fa fa-trash"
+                                aria-hidden="true"></i></a>
                     </div>
                     <input type="text" name="main_desc" id="" placeholder="Product Description"
                         value="<?= $row['main_description'] ?>" required>

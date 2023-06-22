@@ -10,6 +10,7 @@ $admin = new Admin();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <title>Admin Panel</title>
     <script>
@@ -60,7 +61,7 @@ $admin = new Admin();
                 <a class="menu-item" id="buyer-btn" onclick="select('buyer-btn','opt-3')"><i
                         class="fa fa-shopping-basket" aria-hidden="true"></i> &nbsp; Buyers</a>
                 <a class="menu-item" id="delivery-btn" onclick="select('delivery-btn','opt-1')"><i
-                        class="fa fa-shipping-fast" aria-hidden="true"></i> &nbsp; Delivery Price</a>
+                        class="fa fa-shipping-fast" aria-hidden="true"></i> &nbsp; Service Price</a>
                 <a class="menu-item" id="stat-btn" onclick="select('stat-btn','opt-4')"><i class="fa fa-bar-chart"
                         aria-hidden="true"></i> &nbsp; Stats</a>
                 <a class="menu-item" id="message-btn" onclick="select('message-btn','opt-7')"><i class="fa fa-comments"
@@ -125,11 +126,7 @@ $admin = new Admin();
                         </div>
                         <div class="stat">
                             <p class="first">300</p>
-                            <p class="second">Today's Revenue</p>
-                        </div>
-                        <div class="stat">
-                            <p class="first">300</p>
-                            <p class="second">Total Transaction</p>
+                            <p class="second">Today's Transaction</p>
                         </div>
                         <div class="stat">
                             <p class="first">300</p>

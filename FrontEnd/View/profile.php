@@ -1,7 +1,7 @@
 <?php
 require_once '../../BackEnd/Session/usersession.php';
 require_once '../../BackEnd/User.php';
-$user = new User($_SESSION['customer_id'],$_SESSION['email']);
+$user = new User($_SESSION['customer_id'], $_SESSION['email']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +11,7 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
     <meta http-equiv="X-UA-Compatible" content="IE=eocuge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <title>Profile Page</title>
 </head>
@@ -29,17 +30,29 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
                     <a onclick="select('pro-btn','row-2')" id="pro-btn">Edit Profile</a>
                     <a onclick="select('pass-btn','row-3')" id="pass-btn">Change Password</a>
                     <a href="contact.php">Contact Adminstrator</a>
-                    <a href="">Logout</a>
+                    <a href="../../BackEnd/Services/logout.php">Logout</a>
                 </div>
                 <div class="col-2">
                     <div class="history" id="row-1">
-                        <div class="hist-row">
+                        <?php
+                        $hist_res = $user->getMyOrders();
+                        while ($row = $hist_res->fetch_assoc()) {
+                            echo '<div class="hist-row">
+                                <p class="title">' . $row['product_name'] . '</p>
+                                <p class="quan">' . $row['quantity'] . '</p>
+                                <p class="price">' . $row['price'] . '</p>
+                                <a href="../../BackEnd/Services/deliveryupdate.php?id=' . $row['order_id'] . '" class="rate-btn">Mark as Delivered</a>
+                                <a href="rateproduct.php?id=' . $row['product_id'] . '"class="rate-btn">Rate Product</a>
+                                </div>';
+                        }
+                        ?>
+                        <!-- <div class="hist-row">
                             <p class="title">iPhone 14 pro</p>
+                            <p class="quan">3</p>
                             <p class="price">1000 Birr</p>
-                            <p class="cart-id">Status</p>
-                            <p class="rate-btn">Mark as Delivered</p>
-                            <p class="rate-btn">Rate Product</p>
-                        </div>
+                            <a href="../../BackEnd/" class="rate-btn">Mark as Delivered</a>
+                            <a href="../../BackEnd/" class="rate-btn">Rate Product</a>
+                        </div> -->
                     </div>
                     <div class="edit-profile" id="row-2">
                         <!-- Retriving data from the database -->
@@ -68,7 +81,11 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
                                 $email = input_cleaner($_POST['email']);
                                 $phnum = input_cleaner($_POST['phnumber']);
                                 $add = input_cleaner($_POST['address']);
-                                $user->updateInfo($fn,$ln,$email,$phnum,$add);
+                                if (validateEmail($email)) {
+                                    $user->updateInfo($fn, $ln, $email, $phnum, $add);
+                                } else {
+                                    echo 'Invalid email';
+                                }
                             }
                             ?>
                         </form>
@@ -85,12 +102,17 @@ $user = new User($_SESSION['customer_id'],$_SESSION['email']);
                                 $oldPass = $_POST['oldpass'];
                                 $newPass = $_POST['newpass'];
                                 $conPass = $_POST['conpass'];
-                                if ($newPass != $conPass) {
-                                    echo "Password don't match!";
+                                if (validatePassword($newPass)) {
+                                    if ($newPass != $conPass) {
+                                        echo "Password don't match!";
+                                    } else {
+                                        $newPass = hash('sha256', $newPass);
+                                        $user->updatePassword($oldPass,$newPass);
+                                    }
                                 } else {
-                                    $newPass = hash('sha256', $newPass);
-                                    User::updatePassword($user->user_id, $oldPass, $newPass);
+                                    echo 'Password must be at least 8 characters.';
                                 }
+
                             }
                             ?>
                         </form>

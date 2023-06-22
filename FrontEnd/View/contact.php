@@ -15,6 +15,7 @@ if ($_SESSION['status'] == 'logged') {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style/style.css">
+  <link rel="icon" href="../Assets/img/adulislogo1000.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
   <title>Contact</title>
 </head>
@@ -33,7 +34,12 @@ if ($_SESSION['status'] == 'logged') {
           if (isset($_POST['submit'])) {
             $email = input_cleaner($_POST['email']);
             $mess = input_cleaner($_POST['message']);
-            $user->contactAdmin($email, $mess);
+            if (validateEmail($email)) {
+              $user->contactAdmin($email, $mess);
+            } else {
+              echo 'Invalid email';
+            }
+
           }
           ?>
         </form>

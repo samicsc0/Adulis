@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+} else {
+    header('location: login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,36 +21,33 @@ session_start();
 <body>
     <div class="reset-container">
         <img src="../Assets/img/key-chain.png" alt="">
-        <p class="reset-title">Forgot password?</p>
-        <p class="reset-sub">No worries, We'll help you to reset it.</p>
+        <p class="reset-title">Enter Confirmation Code Sent To</p>
+        <p class="reset-sub">
+            <?= $email; ?>
+        </p>
         <form action="" method="post">
-            <input type="email" name="email" id="email" placeholder="Enter your email">
+            <input type="number" name="code" id="code" placeholder="Enter the code here" min="0001" max="9999">
             <input type="submit" name="submit" value="Continue" class="submit">
             <?php
-            require 'inputcleaner.php';
-            require_once '../../BackEnd/User.php';
+            require '../../BackEnd/User.php';
             if (isset($_POST['submit'])) {
-                $email = input_cleaner($_POST['email']);
-                if (validateEmail($email)) {
-                    if (User::checkEmail($email)) {
-                        if (User::insertIntoreset($email,rand(1000, 9999))) {
-                            $_SESSION['email'] = $email;
-                            header('location: resetconfirmation.php');
-                        }
-                    }
+                $pin = $_POST['code'];
+                if (User::checkResetCode($email, hash("sha256",$pin))) {
+                    $_SESSION['verifed'] = true;
+                    header('location: password.php');
+                } else {
+                    echo 'Incorrect confirmation code.';
                 }
-
             }
             ?>
         </form>
-        <p class="back"><a href="./login.php">&#8592; Back to Login</a></p>
+        <p class="back"><a href="login.php">&#8592;&nbsp;Back to Login</a></p>
     </div>
     <script>
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
         }
     </script>
-
 </body>
 
 </html>

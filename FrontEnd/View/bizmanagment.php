@@ -1,6 +1,7 @@
 <?php
+require_once '../../BackEnd/Session/sellersession.php';
 require_once '../../BackEnd/Seller.php';
-$seller = new Seller();
+$seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +11,7 @@ $seller = new Seller();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/style.css">
+    <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <title>Business Managment </title>
 </head>
@@ -52,7 +54,7 @@ $seller = new Seller();
                 <div class="opt-co" id="opt-2">
                     <div class="opt">
                         <?php
-                        $itemlistres = $seller->getMyProducts(10);
+                        $itemlistres = $seller->getMyProducts();
                         while ($row = $itemlistres->fetch_assoc()) {
                             echo ' <div class="item">
                                 <img src="' . $row['url'] . '" alt="">
@@ -124,7 +126,7 @@ $seller = new Seller();
                                 $img_2 = $_FILES['img_2'];
                                 $img_3 = $_FILES['img_3'];
                                 $img_4 = $_FILES['img_4'];
-                                $seller->addProduct(10, $name, $price, $main_desc, $stock, $img_1, $img_2, $img_3, $img_4, input_cleaner($_POST['desc_1']), input_cleaner($_POST['desc_2']), input_cleaner($_POST['desc_3']), input_cleaner($_POST['desc_4']), input_cleaner($_POST['desc_5']), input_cleaner($_POST['desc_6']),input_cleaner($_POST['type']));
+                                $seller->addProduct($name, $price, $main_desc, $stock, $img_1, $img_2, $img_3, $img_4, input_cleaner($_POST['desc_1']), input_cleaner($_POST['desc_2']), input_cleaner($_POST['desc_3']), input_cleaner($_POST['desc_4']), input_cleaner($_POST['desc_5']), input_cleaner($_POST['desc_6']),input_cleaner($_POST['type']));
                             }
 
                             ?>
@@ -137,23 +139,11 @@ $seller = new Seller();
                     <div class="stats-wrapper">
                         <div class="stat">
                             <p class="first">300</p>
-                            <p class="second">Available Items</p>
-                        </div>
-                        <div class="stat">
-                            <p class="first">300</p>
                             <p class="second">Today's Sales</p>
                         </div>
                         <div class="stat">
                             <p class="first">300</p>
                             <p class="second">Today's Revenue</p>
-                        </div>
-                        <div class="stat">
-                            <p class="first">300</p>
-                            <p class="second">Items Sold</p>
-                        </div>
-                        <div class="stat">
-                            <p class="first">300</p>
-                            <p class="second">Total Revenue</p>
                         </div>
                         <div class="stat">
                             <p class="first">300</p>
@@ -165,8 +155,7 @@ $seller = new Seller();
                 <div class="profile" id="opt-5">
                     <div class="profile-wrapper">
                     <?php
-                        $id = 34;
-                        $usrResult = Seller::getUserInfo($id);
+                        $usrResult = $seller->getUserInfo();
                         $row = $usrResult->fetch_assoc();
                         ?>
                         <form action="" method='POST'>
@@ -209,7 +198,7 @@ $seller = new Seller();
                                     echo "Password don't match!";
                                 } else {
                                     $newPass = hash('sha256', $newPass);
-                                    Seller::updatePassword($id,$oldPass,$newPass);
+                                    $seller->updatePassword($oldPass,$newPass);
                                 }
                             }
                             ?>
