@@ -137,7 +137,7 @@
               <div class="desc-sec">
                 <div class="row-1">
                 <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
-                  <p class="price">' . $row['price'] . '</p>
+                  <p class="price">' . $row['price'] . ' Birr</p>
                 </div>
                 <div class="row-2">
                     <p class="desc">' . $row['main_description'] . '</p>
@@ -191,7 +191,7 @@
               <div class="desc-sec">
                 <div class="row-1">
                 <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
-                  <p class="price">' . $row['price'] . '</p>
+                  <p class="price">' . $row['price'] . ' Birr</p>
                 </div>
                 <div class="row-2">
                     <p class="desc">' . $row['main_description'] . '</p>
@@ -247,7 +247,7 @@
               <div class="desc-sec">
                 <div class="row-1">
                 <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
-                  <p class="price">' . $row['price'] . '</p>
+                  <p class="price">' . $row['price'] . ' Birr</p>
                 </div>
                 <div class="row-2">
                     <p class="desc">' . $row['main_description'] . '</p>
@@ -303,7 +303,7 @@
               <div class="desc-sec">
                 <div class="row-1">
                 <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
-                  <p class="price">' . $row['price'] . '</p>
+                  <p class="price">' . $row['price'] . ' Birr</p>
                 </div>
                 <div class="row-2">
                     <p class="desc">' . $row['main_description'] . '</p>
@@ -357,7 +357,7 @@
               <div class="desc-sec">
                 <div class="row-1">
                 <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
-                  <p class="price">' . $row['price'] . '</p>
+                  <p class="price">' . $row['price'] . ' Birr</p>
                 </div>
                 <div class="row-2">
                     <p class="desc">' . $row['main_description'] . '</p>
@@ -411,7 +411,7 @@
               <div class="desc-sec">
                 <div class="row-1">
                 <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
-                  <p class="price">' . $row['price'] . '</p>
+                  <p class="price">' . $row['price'] . ' Birr</p>
                 </div>
                 <div class="row-2">
                     <p class="desc">' . $row['main_description'] . '</p>
@@ -465,7 +465,7 @@
               <div class="desc-sec">
                 <div class="row-1">
                 <a href="detail.php?itemid=' . $row['product_id'] . '"><p class="title">' . $row['product_name'] . '</p></a>
-                  <p class="price">' . $row['price'] . '</p>
+                  <p class="price">' . $row['price'] . ' Birr</p>
                 </div>
                 <div class="row-2">
                     <p class="desc">' . $row['main_description'] . '</p>

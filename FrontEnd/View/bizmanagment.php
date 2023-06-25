@@ -13,7 +13,7 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email'], $_SESSION['se
     <link rel="stylesheet" href="../style/style.css">
     <link rel="icon" href="../Assets/img/adulislogo1000.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-    <title>Business Managment </title>
+    <title>Business Managment</title>
 </head>
 
 <body>
@@ -58,7 +58,7 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email'], $_SESSION['se
                                 if ($row['buyer_status'] == 0) {
                                     echo '<p class="">Wating for Customer</p>';
                                 } else {
-                                    echo '<a href="../../BackEnd/Services/sellerupdate.php?oid='.$row['order_id'].'" class="mark">Mark as Delivered</a>';
+                                    echo '<a href="../../BackEnd/Services/sellerupdate.php?oid=' . $row['order_id'] . '" class="mark">Mark as Delivered</a>';
                                 }
 
                                 echo '</div>';
@@ -72,14 +72,18 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email'], $_SESSION['se
                     <div class="opt">
                         <?php
                         $itemlistres = $seller->getMyProducts();
-                        while ($row = $itemlistres->fetch_assoc()) {
-                            echo ' <div class="item">
+                        if ($itemlistres != false) {
+                            while ($row = $itemlistres->fetch_assoc()) {
+                                echo ' <div class="item">
                                 <img src="' . $row['url'] . '" alt="">
                                 <p class="item-name">' . $row['product_name'] . '</p>
                                 <div class="lower"><p class="stock">' . $row['stock'] . ' Items </p>
                                 <a href = "upproduct.php?pid=' . $row['product_id'] . '"class="edit"><i class="fas fa-edit"></i></a>
                             </div>
                         </div>';
+                            }
+                        }else{
+                            echo '<p>Its empty</p>';
                         }
                         ?>
                     </div>
@@ -103,10 +107,10 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email'], $_SESSION['se
                                 <p class="label">Product Photo</p>
 
                                 <div class="sub-row-1">
-                                    <input type="file" name="img_1" id="img_1">
-                                    <input type="file" name="img_2" id="img_1">
-                                    <input type="file" name="img_3" id="img_1">
-                                    <input type="file" name="img_4" id="img_1">
+                                    <input type="file" name="img_1" id="img_1" required>
+                                    <input type="file" name="img_2" id="img_2" required>
+                                    <input type="file" name="img_3" id="img_3" required>
+                                    <input type="file" name="img_4" id="img_4" required>
                                 </div>
 
                             </div>
@@ -134,7 +138,7 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email'], $_SESSION['se
                             </div>
                             <input type="submit" name="submit-1" value="Upload Product &#8594">
                             <?php
-                            require_once 'inputcleaner.php';
+                            require 'inputcleaner.php';
                             if (isset($_POST['submit-1'])) {
                                 $name = input_cleaner($_POST['pname']);
                                 $price = input_cleaner($_POST['pprice']);
@@ -156,15 +160,21 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email'], $_SESSION['se
                 <div class="stats" id="opt-4" style="display:none;">
                     <div class="stats-wrapper">
                         <div class="stat">
-                            <p class="first"><?=$seller->getTotalSales();?></p>
+                            <p class="first">
+                                <?= $seller->getTotalSales(); ?>
+                            </p>
                             <p class="second">Items Sold</p>
                         </div>
                         <div class="stat">
-                            <p class="first"><?=$seller->getTotalRevenue();?></p>
+                            <p class="first">
+                                <?= $seller->getTotalRevenue(); ?>
+                            </p>
                             <p class="second">Total Revenue</p>
                         </div>
                         <div class="stat">
-                            <p class="first"><?=$seller->getAvrating();?></p>
+                            <p class="first">
+                                <?= $seller->getAvrating(); ?>
+                            </p>
                             <p class="second">Average Rating</p>
                         </div>
                     </div>

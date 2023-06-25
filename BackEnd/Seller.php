@@ -96,7 +96,7 @@ class Seller extends User
         require 'config.php';
         $sql = "INSERT INTO product(seller_id, product_name, price, main_description,stock,cat) VALUES (?,?,?,?,?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('isisis', $this->user_id, $name, $price, $main_desc, $stock, $type);
+        $stmt->bind_param('isisis', $this->seller_id, $name, $price, $main_desc, $stock, $type);
         if ($stmt->execute()) {
             $sql = "SELECT * from product ORDER BY product_id DESC LIMIT 1";
             $result = mysqli_query($conn, $sql);
@@ -148,6 +148,8 @@ class Seller extends User
                     mysqli_query($conn, $sql);
                 }
                 echo 'Product uploaded successfully.';
+            }else{
+                echo $stmt->error;
             }
         }
 
@@ -252,7 +254,7 @@ class Seller extends User
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $pid);
         if ($stmt->execute()) {
-            header('location: ../FrontEnd/View/bizmanagment.php');
+            header('location: ../../FrontEnd/View/bizmanagment.php');
         } else {
             echo 'Failed to remove the item';
         }
