@@ -37,7 +37,7 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email'],$_SESSION['sel
                     <div class="row-1">
                         <input type="text" name='pname' placeholder="Product Name" value="<?= $row['product_name'] ?>"
                             required>
-                        <a href="../../BackEnd/removeitem.php?pid=<?= $prid ?>"><i class="fa fa-trash"
+                        <a href="../../BackEnd/Services/removeitem.php?pid=<?= $prid ?>"><i class="fa fa-trash"
                                 aria-hidden="true"></i></a>
                     </div>
                     <input type="text" name="main_desc" id="" placeholder="Product Description"

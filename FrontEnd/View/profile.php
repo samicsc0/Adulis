@@ -50,13 +50,6 @@ $user = new User($_SESSION['customer_id'], $_SESSION['email']);
                                 </div>';
                         }
                         ?>
-                        <!-- <div class="hist-row">
-                            <p class="title">iPhone 14 pro</p>
-                            <p class="quan">3</p>
-                            <p class="price">1000 Birr</p>
-                            <a href="../../BackEnd/" class="rate-btn">Mark as Delivered</a>
-                            <a href="../../BackEnd/" class="rate-btn">Rate Product</a>
-                        </div> -->
                     </div>
                     <div class="edit-profile" id="row-2">
                         <!-- Retriving data from the database -->

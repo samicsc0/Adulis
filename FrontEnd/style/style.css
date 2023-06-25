@@ -1325,6 +1325,9 @@ hr {
 .business-man-container .newsell {
     display: none;
 }
+.business-man-container .stats{
+    display: none;
+}
 
 /* Style for the seller information page */
 .detail-info-container {

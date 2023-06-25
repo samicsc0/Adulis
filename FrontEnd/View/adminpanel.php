@@ -1,6 +1,8 @@
 <?php
 require_once '../../BackEnd/Admin.php';
-$admin = new Admin();
+require '../../BackEnd/Session/adminsession.php';
+$admin = new Admin($_SESSION['customer_id'], $_SESSION['email']);
+require 'inputcleaner.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +29,6 @@ $admin = new Admin();
             }
         }
 
-        window.addEventListener('resize', handleScreenSizeChange);
-
-
         function blockMobileDevices() {
             if (isMobileDevice() || window.innerWidth <= 768) {
                 document.body.innerHTML = '';
@@ -37,11 +36,7 @@ $admin = new Admin();
                 document.close();
             }
         }
-
-        // Call the blockMobileDevices function when the page loads
         window.onload = blockMobileDevices;
-        window.onresize = handleScreenSizeChange;
-
     </script>
 </head>
 
@@ -70,7 +65,7 @@ $admin = new Admin();
                         aria-hidden="true"></i> &nbsp; Edit Profile</a>
                 <a class="menu-item" id="pss-btn" onclick="select('pss-btn','opt-6')"><i class="fa fa-key"
                         aria-hidden="true"></i>&nbsp; Change Password</a>
-                <a class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
+                <a href="../../BackEnd/Services/logout.php" class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
             </div>
             <div class="opt-container">
                 <!-- Second Option -->
@@ -86,9 +81,9 @@ $admin = new Admin();
                                 <p class="location">' . $row['address'] . '</p>
                                 <p class="deactive">';
                             if ($row['acct_status'] == 1) {
-                                echo '<a href="../../BackEnd/deactivate.php">Deactivate Account</a>';
+                                echo '<a href="../../BackEnd/Services/accountmanager.php?req=deac&id=' . $row['customer_id'] . '">Deactivate Account</a>';
                             } else {
-                                echo '<a href="../../BackEnd/activate.php">Activate Account</a>';
+                                echo '<a href="../../BackEnd/Services/accountmanager.php?req=act&id=' . $row['customer_id'] . '">Activate Account</a>';
                             }
                             echo '</p></div>';
                         }
@@ -121,19 +116,21 @@ $admin = new Admin();
                 <div class="stats" id="opt-4">
                     <div class="stats-wrapper">
                         <div class="stat">
-                            <p class="first">300</p>
-                            <p class="second">Today's Sales</p>
+                            <p class="first">
+                                <?= $admin->totalItems(); ?>
+                            </p>
+                            <p class="second">Items Sold</p>
                         </div>
                         <div class="stat">
-                            <p class="first">300</p>
-                            <p class="second">Today's Transaction</p>
-                        </div>
-                        <div class="stat">
-                            <p class="first">300</p>
+                            <p class="first">
+                                <?= $admin->numberOfBuyers() ?>
+                            </p>
                             <p class="second">Number of Buyers</p>
                         </div>
                         <div class="stat">
-                            <p class="first">300</p>
+                            <p class="first">
+                                <?= $admin->numberOfSellers() ?>
+                            </p>
                             <p class="second">Number of Sellers</p>
                         </div>
                     </div>
@@ -141,14 +138,33 @@ $admin = new Admin();
                 <!-- Fifth Option-->
                 <div class="profile" id="opt-5">
                     <div class="profile-wrapper">
-                        <form action="">
-                            <input type="text" name="" id="" placeholder="First Name" required>
-                            <input type="text" name="" id="" placeholder="Last Name" required>
-                            <input type="text" name="" id="" placeholder="Business Name" required>
-                            <input type="email" name="" id="" placeholder="Email" required>
-                            <input type="number" name="" id="" placeholder="Phone Number" required>
-                            <input type="text" name="" id="" placeholder="Address">
+                        <?php
+                        $admResult = $admin->getUserInfo();
+                        $row = $admResult->fetch_assoc();
+                        ?>
+                        <form action="" method="POST">
+                            <input type="text" name="firstname" id="" placeholder="First Name"
+                                value="<?= $row['first_name']; ?>" required>
+                            <input type="text" name="lastname" id="" placeholder="Last Name"
+                                value="<?= $row['last_name']; ?>" required>
+                            <input type="email" name="email" id="" placeholder="Email" value="<?= $row['email']; ?>"
+                                required>
+                            <input type="number" name="phno" id="" placeholder="Phone Number"
+                                value="<?= $row['phone_number']; ?>" required>
                             <input type="submit" name='submit-0' value="Update">
+                            <?php
+                            if (isset($_POST['submit-0'])) {
+                                $fn = input_cleaner($_POST['firstname']);
+                                $ln = input_cleaner($_POST['lastname']);
+                                $email = input_cleaner($_POST['email']);
+                                $phnumber = input_cleaner($_POST['phno']);
+                                if (validateEmail($email)) {
+                                    $admin->updateInfo($fn, $ln, $email, $phnumber, " ");
+                                } else {
+                                    echo 'Invalid email';
+                                }
+                            }
+                            ?>
                         </form>
                     </div>
                 </div>
@@ -157,11 +173,29 @@ $admin = new Admin();
 
                 <div class="password" id="opt-6">
                     <div class="password-wrapper">
-                        <form action="">
-                            <input type="password" name="" id="" placeholder="Old Password">
-                            <input type="password" name="" id="" placeholder="New Password">
-                            <input type="password" name="" id="" placeholder="Confirm Password">
+                        <form action="" method="POST">
+                            <input type="password" name="oldpass" id="" placeholder="Old Password">
+                            <input type="password" name="newpass" id="" placeholder="New Password">
+                            <input type="password" name="conpass" id="" placeholder="Confirm Password">
                             <input type="submit" name='submit-1' value="Update">
+                            <?php
+                            if (isset($_POST['submit-1'])) {
+                                $oldPass = $_POST['oldpass'];
+                                $newPass = $_POST['newpass'];
+                                $conPass = $_POST['conpass'];
+                                if (validatePassword($newPass)) {
+                                    if ($newPass != $conPass) {
+                                        echo "Password don't match!";
+                                    } else {
+                                        $newPass = hash('sha256', $newPass);
+                                        $admin->updatePassword($oldPass, $newPass);
+                                    }
+                                } else {
+                                    echo 'Password must be at least 8 characters.';
+                                }
+
+                            }
+                            ?>
                         </form>
                     </div>
                 </div>
@@ -170,33 +204,20 @@ $admin = new Admin();
                 <div class="enquires" id="opt-7">
                     <div class="enquires-wrapper">
                         <?php
-                            $messageRes = $admin->getMessages();
-                            while($row = $messageRes->fetch_assoc()){
-                                echo '<div class="enquiry">
+                        $messageRes = $admin->getMessages();
+                        while ($row = $messageRes->fetch_assoc()) {
+                            echo '<div class="enquiry">
                                 <div class="row-1">
-                                    <p class="email-account">'.$row['email'].'</p>
-                                    <p class="user-type">'.$row['role'].'</p>
-                                    <p class="time">'.date_format(date_create($row['date']), 'd-m-Y') .'</p>
+                                    <p class="email-account">' . $row['email'] . '</p>
+                                    <p class="user-type">' . $row['role'] . '</p>
+                                    <p class="time">' . date_format(date_create($row['date']), 'd-m-Y') . '</p>
                                     </div>
                                     <div class="row-2">
-                                        <p class="message">'.$row['message'].'</p>
+                                        <p class="message">' . $row['message'] . '</p>
                                     </div>
                                 </div>';
-                            }
+                        }
                         ?>
-                        <!-- <div class="enquiry">
-                            <div class="row-1">
-                                <p class="email-account">samuelzewde29@gmail.com</p>
-                                <p class="user-type">Buyer</p>
-                                <p class="time">5/30/2023</p>
-                            </div>
-                            <div class="row-2">
-                                <p class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam,
-                                    dolorum placeat eligendi quam soluta dolores nemo voluptatum laudantium, libero aut
-                                    inventore possimus alias eos blanditiis obcaecati cum harum fugiat. Nam, illo
-                                    perferendis.</p>
-                            </div>
-                        </div> -->
                     </div>
 
                 </div>
@@ -212,13 +233,7 @@ $admin = new Admin();
                                 <p class="full_name">' . $row['first_name'] . ' ' . $row['last_name'] . '</p>
                                 <p class="phno">' . $row['phone_number'] . '</p>
                                 <p class="location">' . $row['address'] . '</p>
-                                <p class="deactive">';
-                            if ($row['acct_status'] == 1) {
-                                echo '<a href="../../BackEnd/deactivate.php">Deactivate Account</a>';
-                            } else {
-                                echo '<a href="../../BackEnd/activate.php">Activate Account</a>';
-                            }
-                            echo '</p></div>';
+                                <a href="../../BackEnd/Services/accountmanager.php?req=rev&id=' . $row['customer_id'] . '">Review</a>';
                         }
                         ?>
                     </div>
