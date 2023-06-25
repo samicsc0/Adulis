@@ -44,7 +44,7 @@
                                         echo "Password Don't Match!";
                                     } else {
                                         $password = hash("sha256", $password);
-                                        User::register($firstname, $lastname, $phnumber, $email, $address, $password);
+                                        User::register($firstname, $lastname, $phnumber, $email, $address, $password,'buyer');
                                     }
                                 }else{
                                     echo 'Password must be at least 8 characters.';

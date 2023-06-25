@@ -95,8 +95,8 @@
                 echo '<span class="fa fa-star"></span>';
               }
             }
-            echo '</span><span>(300)</span>
-                    </p>
+            echo "<span> (" . User::getTotalRatings($row['product_id']) . ")</span>";
+            echo '</p>
                     <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
@@ -150,9 +150,9 @@
                 echo '<span class="fa fa-star"></span>';
               }
             }
-            echo '</span><span>(300)</span>
-                    </p>
-                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+            echo "<span> (" . User::getTotalRatings($row['product_id']) . ")</span>";
+            echo '</p>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
                 </div>
@@ -204,9 +204,9 @@
                 echo '<span class="fa fa-star"></span>';
               }
             }
-            echo '</span><span>(300)</span>
-                    </p>
-                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+            echo "<span> (" . User::getTotalRatings($row['product_id']) . ")</span>";
+            echo '</p>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
                 </div>
@@ -260,9 +260,9 @@
                 echo '<span class="fa fa-star"></span>';
               }
             }
-            echo '</span><span>(300)</span>
-                    </p>
-                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+            echo "<span> (" . User::getTotalRatings($row['product_id']) . ")</span>";
+            echo '</p>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
                 </div>
@@ -316,9 +316,9 @@
                 echo '<span class="fa fa-star"></span>';
               }
             }
-            echo '</span><span>(300)</span>
-                    </p>
-                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+            echo "<span> (" . User::getTotalRatings($row['product_id']) . ")</span>";
+            echo '</p>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
                 </div>
@@ -370,9 +370,9 @@
                 echo '<span class="fa fa-star"></span>';
               }
             }
-            echo '</span><span>(300)</span>
-                    </p>
-                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+            echo "<span> (" . User::getTotalRatings($row['product_id']) . ")</span>";
+            echo '</p>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
                 </div>
@@ -424,9 +424,9 @@
                 echo '<span class="fa fa-star"></span>';
               }
             }
-            echo '</span><span>(300)</span>
-                    </p>
-                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+            echo "<span> (" . User::getTotalRatings($row['product_id']) . ")</span>";
+            echo '</p>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
                 </div>
@@ -478,9 +478,9 @@
                 echo '<span class="fa fa-star"></span>';
               }
             }
-            echo '</span><span>(300)</span>
-                    </p>
-                    <a href="' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
+            echo "<span> (" . User::getTotalRatings($row['product_id']) . ")</span>";
+            echo '</p>
+                    <a href="../../BackEnd/Services/cartprocessor.php?request=add&item=' . $row['product_id'] . '" class="btn-addcart">Add to Cart</a>
                 </div>
                   </div>
                 </div>

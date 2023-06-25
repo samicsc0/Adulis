@@ -1,7 +1,7 @@
 <?php
 require_once '../../BackEnd/Session/sellersession.php';
 require_once '../../BackEnd/Seller.php';
-$seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
+$seller = new Seller($_SESSION['customer_id'], $_SESSION['email'], $_SESSION['seller_id']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +25,9 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
             <div class="menu-sec">
                 <a class="menu-item active" id="order-btn" onclick="select('order-btn','opt-1')"><i
                         class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp; New Orders</a>
+                <a class="menu-item" id="closed-btn" onclick="select('closed-btn','opt-7')"><i class="fa fa-check"
+                        aria-hidden="true"></i>
+                    &nbsp; Closed Orders</a>
                 <a class="menu-item" id="list-btn" onclick="select('list-btn','opt-2')"><i class="fa fa-book"
                         aria-hidden="true"></i> &nbsp; Items List</a>
                 <a class="menu-item" id="add-btn" onclick="select('add-btn','opt-3')"><i class="fa fa-pencil-square"
@@ -35,19 +38,33 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
                         aria-hidden="true"></i> &nbsp; Edit Profile</a>
                 <a class="menu-item" id="pss-btn" onclick="select('pss-btn','opt-6')"><i class="fa fa-key"
                         aria-hidden="true"></i>&nbsp; Change Password</a>
-                <a href="contact.php" class="menu-item"> <i class="fa-solid fa-walkie-talkie"></i> &nbsp; Contact Adminstrator</a>
-                <a class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
+                <a href="contact.php" class="menu-item"> <i class="fa-solid fa-walkie-talkie"></i> &nbsp; Contact
+                    Adminstrator</a>
+                <a href="../../BackEnd/Services/logout.php" class="menu-item"> <i
+                        class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
             </div>
             <div class="opt-container">
                 <!-- First Option-->
                 <div class="new-order" id="opt-1">
                     <div class="order-wrapper">
-                        <div class="orderd_item">
-                            <img src="../Assets/img/iph.jpg" alt="">
-                            <p class="product-name">iPhone 14 pro</p>
-                            <p class="price">1000 Birr</p>
-                            <p class="mark">Mark as Delivered</p>
-                        </div>
+                        <?php
+                        $resultNewOr = $seller->getNewOrders();
+                        if ($resultNewOr != false) {
+                            while ($row = $resultNewOr->fetch_assoc()) {
+                                echo '<div class="orderd_item">
+                            <a href="orderdetail.php?oid=' . $row['order_id'] . '" class="product-name">' . $row['product_name'] . '</a>
+                            <p class="quan">' . $row['quantity'] . ' items</p>
+                            <p class="price">' . $row['price'] . ' Birr</p>';
+                                if ($row['buyer_status'] == 0) {
+                                    echo '<p class="">Wating for Customer</p>';
+                                } else {
+                                    echo '<a href="../../BackEnd/Services/sellerupdate.php?oid='.$row['order_id'].'" class="mark">Mark as Delivered</a>';
+                                }
+
+                                echo '</div>';
+                            }
+                        }
+                        ?>
                     </div>
                 </div>
                 <!-- Second Option-->
@@ -60,7 +77,7 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
                                 <img src="' . $row['url'] . '" alt="">
                                 <p class="item-name">' . $row['product_name'] . '</p>
                                 <div class="lower"><p class="stock">' . $row['stock'] . ' Items </p>
-                                <a href = "upproduct.php?pid='.$row['product_id'].'"class="edit"><i class="fas fa-edit"></i></a>
+                                <a href = "upproduct.php?pid=' . $row['product_id'] . '"class="edit"><i class="fas fa-edit"></i></a>
                             </div>
                         </div>';
                         }
@@ -77,7 +94,8 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
                             <div class="row-1">
                                 <input type="text" name="pname" id="" placeholder="Product Name" required>
                                 <input type="number" name="pprice" id="" placeholder="Price" required>
-                                <input type="text" name="pdesc" id="" placeholder="Main Description" required>
+                                <input type="text" name="pdesc" id="" placeholder="Main Description" maxlength="86"
+                                    required>
                             </div>
 
                             <div class="row-2">
@@ -126,7 +144,7 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
                                 $img_2 = $_FILES['img_2'];
                                 $img_3 = $_FILES['img_3'];
                                 $img_4 = $_FILES['img_4'];
-                                $seller->addProduct($name, $price, $main_desc, $stock, $img_1, $img_2, $img_3, $img_4, input_cleaner($_POST['desc_1']), input_cleaner($_POST['desc_2']), input_cleaner($_POST['desc_3']), input_cleaner($_POST['desc_4']), input_cleaner($_POST['desc_5']), input_cleaner($_POST['desc_6']),input_cleaner($_POST['type']));
+                                $seller->addProduct($name, $price, $main_desc, $stock, $img_1, $img_2, $img_3, $img_4, input_cleaner($_POST['desc_1']), input_cleaner($_POST['desc_2']), input_cleaner($_POST['desc_3']), input_cleaner($_POST['desc_4']), input_cleaner($_POST['desc_5']), input_cleaner($_POST['desc_6']), input_cleaner($_POST['type']));
                             }
 
                             ?>
@@ -138,15 +156,15 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
                 <div class="stats" id="opt-4" style="display:none;">
                     <div class="stats-wrapper">
                         <div class="stat">
-                            <p class="first">300</p>
-                            <p class="second">Today's Sales</p>
+                            <p class="first"><?=$seller->getTotalSales();?></p>
+                            <p class="second">Items Sold</p>
                         </div>
                         <div class="stat">
-                            <p class="first">300</p>
-                            <p class="second">Today's Revenue</p>
+                            <p class="first"><?=$seller->getTotalRevenue();?></p>
+                            <p class="second">Total Revenue</p>
                         </div>
                         <div class="stat">
-                            <p class="first">300</p>
+                            <p class="first"><?=$seller->getAvrating();?></p>
                             <p class="second">Average Rating</p>
                         </div>
                     </div>
@@ -154,28 +172,33 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
                 <!-- Fourth Option-->
                 <div class="profile" id="opt-5">
                     <div class="profile-wrapper">
-                    <?php
+                        <?php
                         $usrResult = $seller->getUserInfo();
                         $row = $usrResult->fetch_assoc();
                         ?>
                         <form action="" method='POST'>
-                            <input type="text" name="firstname" id="" placeholder="First Name" value="<?=$row['first_name']?>" required>
-                            <input type="text" name="lastname" id="" placeholder="Last Name" value="<?=$row['last_name']?>" required>
-                            <input type="text" name="bizname" id="" placeholder="Business Name" value="<?=$row['business_name']?>" required>
-                            <input type="email" name="email" id="" placeholder="Email" value="<?=$row['email']?>" required>
-                            <input type="number" name="phno" id="" placeholder="Phone Number" value="<?=$row['phone_number']?>" required>
-                            <input type="text" name="address" id="" placeholder="Address" value="<?=$row['address']?>">
-                            <a href="">Locate Me</a>
+                            <input type="text" name="firstname" id="" placeholder="First Name"
+                                value="<?= $row['first_name'] ?>" required>
+                            <input type="text" name="lastname" id="" placeholder="Last Name"
+                                value="<?= $row['last_name'] ?>" required>
+                            <input type="text" name="bizname" id="" placeholder="Business Name"
+                                value="<?= $row['business_name'] ?>" required>
+                            <input type="email" name="email" id="" placeholder="Email" value="<?= $row['email'] ?>"
+                                required>
+                            <input type="number" name="phno" id="" placeholder="Phone Number"
+                                value="<?= $row['phone_number'] ?>" required>
+                            <input type="text" name="address" id="" placeholder="Address"
+                                value="<?= $row['address'] ?>">
                             <input type="submit" name="submit-2" value="Update">
-                            <?php 
-                            if(isset($_POST['submit-2'])){
+                            <?php
+                            if (isset($_POST['submit-2'])) {
                                 $fn = $_POST['firstname'];
                                 $ln = $_POST['lastname'];
                                 $bn = $_POST['bizname'];
                                 $email = $_POST['email'];
                                 $phnumber = $_POST['phno'];
                                 $address = $_POST['address'];
-                                Seller::updateSellerInfo($id,$fn,$ln,$email,$phnumber,$address,$bn);
+                                $seller->updateSellerInfo($fn, $ln, $email, $phnumber, $address, $bn);
                             }
                             ?>
                         </form>
@@ -194,15 +217,36 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
                                 $oldPass = $_POST['oldpass'];
                                 $newPass = $_POST['newpass'];
                                 $conPass = $_POST['conpass'];
-                                if ($newPass != $conPass) {
-                                    echo "Password don't match!";
+                                if (validatePassword($newPass)) {
+                                    if ($newPass != $conPass) {
+                                        echo "Password don't match!";
+                                    } else {
+                                        $newPass = hash('sha256', $newPass);
+                                        $seller->updatePassword($oldPass, $newPass);
+                                    }
                                 } else {
-                                    $newPass = hash('sha256', $newPass);
-                                    $seller->updatePassword($oldPass,$newPass);
+                                    echo 'Password must be at least 8 characters.';
                                 }
+
                             }
                             ?>
                         </form>
+                    </div>
+                </div>
+                <div class="completed" id="opt-7">
+                    <div class="order-wrapper">
+                        <?php
+                        $closedRes = $seller->getClosedOrders();
+                        if ($closedRes != false) {
+                            while ($row = $closedRes->fetch_assoc()) {
+                                echo '<div class="orderd_item">
+                                <a href="orderdetail.php?oid=' . $row['order_id'] . '" class="product-name">' . $row['product_name'] . '</a>
+                                <p class="quan">' . $row['quantity'] . ' Items</p>
+                                <p class="price">' . $row['price'] . ' Birr</p>
+                                </div>';
+                            }
+                        }
+                        ?>
                     </div>
                 </div>
 
@@ -218,7 +262,9 @@ $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
             document.getElementById('opt-4').style.display = 'none';
             document.getElementById('opt-5').style.display = 'none';
             document.getElementById('opt-6').style.display = 'none';
+            document.getElementById('opt-7').style.display = 'none';
             document.getElementById('order-btn').style.backgroundColor = "white";
+            document.getElementById('closed-btn').style.backgroundColor = "white";
             document.getElementById('list-btn').style.backgroundColor = "white";
             document.getElementById('add-btn').style.backgroundColor = "white";
             document.getElementById('stat-btn').style.backgroundColor = "white";

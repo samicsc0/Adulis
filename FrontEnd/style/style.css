@@ -933,6 +933,7 @@ footer ul a:hover {
     background-color: #00000027;
 }
 
+
 /*Style for new orders */
 .new-order .order-wrapper {
     display: flex;
@@ -947,11 +948,25 @@ footer ul a:hover {
     margin-bottom: 10px;
     border-bottom: 1px #00000025 solid;
 }
+.new-order .mark, .new-order .product-name{
+    text-decoration: none;
+    color: #000;
+}
 
 .new-order img {
     width: 80px;
 }
-
+/*Style for closed orders*/
+.completed .orderd_item{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #00000025;
+}
+.completed .product-name{
+    text-decoration: none;
+    color: #000;
+}
 /*Style for the item list*/
 .opt-container .opt-co {
     display: none;
@@ -1137,6 +1152,9 @@ footer ul a:hover {
     background-color: #0BAB0A;
     color: #fff;
     cursor: pointer;
+}
+.business-man-container .completed{
+    display: none;
 }
 
 /* Update Products Page */

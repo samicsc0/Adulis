@@ -204,13 +204,6 @@ $admin = new Admin();
                 <!-- Eigth Option-->
                 <div class="newsell" id="opt-8">
                     <div class="seller-wrapper">
-                        <!-- <div class="seller">
-                            <p class="biz_name">kaldi's Coffe</p>
-                            <p class="full_name">Samuel Zewde</p>
-                            <p class="phno">+251944263239</p>
-                            <p class="location">Bethel Square</p>
-                            <p class="deactive">Activate Account</p>
-                        </div> -->
                         <?php
                         $data = $admin->newSellers();
                         while ($row = $data->fetch_assoc()) {

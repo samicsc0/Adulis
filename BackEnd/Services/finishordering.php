@@ -27,8 +27,6 @@ if ($data['amount'] != 0) {
     if ($response === false) {
         echo 'Error: ' . curl_error($curl);
     }else{
-        // $decodedmessage = json_decode($response,true);
-        // echo $decodedmessage['message'];
         $amount = $data['amount'];
         $cart_id = $cart->returnCartId();
         $sql = "INSERT INTO invoice (customer_id,cart_id, total_price)
@@ -44,5 +42,6 @@ if ($data['amount'] != 0) {
     }
     curl_close($curl);
 } else {
+    header('location: ../../FrontEnd/View/checkout.php');
 }
 ?>

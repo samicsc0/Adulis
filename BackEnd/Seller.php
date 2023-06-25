@@ -2,23 +2,77 @@
 require_once 'User.php';
 class Seller extends User
 {
-    public $seller_id;
-    public $business_name;
     public $user_id;
+    public $email;
+    public $seller_id;
 
-    function __construct($user_id = null, $email = null)
+    function __construct($user_id = null, $email = null, $seller_id)
     {
         $this->user_id = $user_id;
         $this->email = $email;
+        $this->seller_id = $seller_id;
+    }
+    public static function getSellerId($user_id)
+    {
+        require 'config.php';
+        $sql = "SELECT seller_id FROM seller WHERE customer_id = $user_id ";
+        $res = mysqli_query($conn, $sql);
+        $row = $res->fetch_assoc();
+        return $row['seller_id'];
+    }
+    public function getNewOrders()
+    {
+        require 'config.php';
+        $sql = "SELECT o.order_id,p.product_name, o.product_id, s.seller_id,o.quantity, o.price, o.buyer_status
+        FROM orders o
+        JOIN product p ON o.product_id = p.product_id
+        JOIN seller s ON p.seller_id = s.seller_id
+        WHERE s.seller_id = " . $this->seller_id . " AND o.seller_status = 0";
+        $result = mysqli_query($conn, $sql);
+        return $result;
+    }
+    public function updateDeliveryseller($oid){
+        require 'config.php';
+        $sql = "UPDATE orders
+                SET seller_status = 1
+                WHERE order_id = $oid";
+        if(mysqli_query($conn,$sql)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function getOrProductDetail($oid)
+    {
+        require 'config.php';
+        $sql = "SELECT o.order_id,p.product_name, o.customer_id, o.product_id, s.seller_id,o.quantity, o.price, o.buyer_status, c.first_name, c.last_name, c.phone_number,c.email,c.address,o.buyer_status,o.seller_status
+        FROM orders o
+        JOIN product p ON o.product_id = p.product_id
+        JOIN customer c ON o.customer_id = c.customer_id
+        JOIN seller s ON p.seller_id = s.seller_id
+        WHERE s.seller_id = " . $this->seller_id . " AND order_id =" . $oid . "";
+        $result = mysqli_query($conn, $sql);
+        return $result;
+    }
+    public function getClosedOrders()
+    {
+        require 'config.php';
+        $sql = "SELECT o.order_id, p.product_name, o.price, o.seller_status,o.quantity
+                FROM orders o
+                JOIN product p ON o.product_id = p.product_id
+                JOIN seller s ON p.seller_id = s.seller_id
+                WHERE s.seller_id = " . $this->seller_id . " AND o.seller_status = 1 AND o.buyer_status = 1";
+        $res = mysqli_query($conn, $sql);
+        return $res;
     }
 
-    public static function registerbiz($first_name,$last_name,$phone_number,$email,$address,$password,$biz_name,$role)
+    public static function registerbiz($first_name, $last_name, $phone_number, $email, $address, $password, $biz_name, $role)
     {
         require 'config.php';
         require_once 'Admin.php';
         $sql = "INSERT INTO customer (first_name, last_name, phone_number, email, address, password, role) VALUES (?, ?, ?, ?, ?, ?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssss", $first_name, $last_name, $phone_number, $email, $address, $password,$role);
+        $stmt->bind_param("sssssss", $first_name, $last_name, $phone_number, $email, $address, $password, $role);
         if ($stmt->execute()) {
             $sql = "SELECT * from customer ORDER BY customer_id DESC LIMIT 1";
             $result = mysqli_query($conn, $sql);
@@ -97,7 +151,6 @@ class Seller extends User
             }
         }
 
-        // Upload the image
     }
     private function uploadFile($file, $destinationFolder)
     {
@@ -118,21 +171,21 @@ class Seller extends User
                     FROM image
                     GROUP BY product_id
         ) AS i ON p.product_id = i.product_id
-        WHERE p.seller_id =' . $this->user_id . '';
+        WHERE p.seller_id =' . $this->seller_id . ' AND p.active = 1';
         $result = mysqli_query($conn, $sql);
         return $result;
     }
-    public  function getUserInfo()
+    public function getUserInfo()
     {
         require 'config.php';
         $sql = 'SELECT c.first_name, c.last_name, s.business_name, c.email, c.phone_number, c.address
         FROM customer AS c
         INNER JOIN seller AS s ON s.customer_id = c.customer_id
-        WHERE c.customer_id = ' . $this->user_id. '';
+        WHERE c.customer_id = ' . $this->user_id . '';
         $result = mysqli_query($conn, $sql);
         return $result;
     }
-    public static function updateSellerInfo($id, $fn, $ln, $email, $phno, $add, $bn)
+    public function updateSellerInfo($fn, $ln, $email, $phno, $add, $bn)
     {
         require 'config.php';
         $sql = 'UPDATE customer 
@@ -143,13 +196,13 @@ class Seller extends User
             address = ?
         WHERE customer_id = ?';
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssissi', $fn, $ln, $phno, $email, $add, $id);
+        $stmt->bind_param('ssissi', $fn, $ln, $phno, $email, $add, $this->user_id);
         if ($stmt->execute()) {
             $sql = 'UPDATE seller
             SET business_name = ?
             WHERE customer_id = ?';
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('si', $bn, $id);
+            $stmt->bind_param('si', $bn, $this->user_id);
             if ($stmt->execute()) {
                 echo 'Information updated successfully.';
             } else {
@@ -157,22 +210,24 @@ class Seller extends User
             }
         }
     }
-    public static function getProduct($pid) {
+    public static function getProduct($pid)
+    {
         require 'config.php';
         $sql = "SELECT p.product_name, p.main_description, p.stock, p.price, i.url
         FROM product p
         INNER JOIN (
             SELECT url
             FROM image
-            WHERE product_id = ".$pid."
+            WHERE product_id = " . $pid . "
             LIMIT 1 
-        ) i ON p.product_id =".$pid."
-        WHERE p.product_id = ".$pid."";
-        $result = mysqli_query($conn,$sql);
+        ) i ON p.product_id =" . $pid . "
+        WHERE p.product_id = " . $pid . "";
+        $result = mysqli_query($conn, $sql);
         $row = $result->fetch_assoc();
         return $row;
     }
-    public static function updateProduct($pid,$pname,$pdesc,$pstock,$pprice){
+    public static function updateProduct($pid, $pname, $pdesc, $pstock, $pprice)
+    {
         require 'config.php';
         $sql = "UPDATE product
         SET product_name = ?,
@@ -181,27 +236,79 @@ class Seller extends User
             stock = ?
         WHERE product_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('sisis',$pname,$pprice,$pdesc,$pstock,$pid);
-        if($stmt->execute()){
+        $stmt->bind_param('sisis', $pname, $pprice, $pdesc, $pstock, $pid);
+        if ($stmt->execute()) {
             echo 'Product updated successfully.';
-        } else{
+        } else {
             echo 'Product update failed';
         }
     }
-    public static function removeProduct($pid){
+    public static function removeProduct($pid)
+    {
         require 'config.php';
         $sql = 'UPDATE product
         SET active = 0
         WHERE product_id = ?';
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i',$pid);
-        if($stmt->execute()){
+        $stmt->bind_param('i', $pid);
+        if ($stmt->execute()) {
             header('location: ../FrontEnd/View/bizmanagment.php');
-        }else{
+        } else {
             echo 'Failed to remove the item';
         }
     }
-    
+    public function getTotalSales()
+    {
+        require 'config.php';
+        $sql = "SELECT o.order_id
+        FROM orders o
+        JOIN product p ON o.product_id = p.product_id
+        JOIN seller s ON p.seller_id = s.seller_id
+        WHERE s.seller_id =" . $this->seller_id . " AND o.seller_status = 1";
+        $res = mysqli_query($conn, $sql);
+        return mysqli_num_rows($res);
+    }
+    public function getTotalRevenue()
+    {
+        require 'config.php';
+        $sql = "SELECT o.price
+        FROM orders o
+        JOIN product p ON o.product_id = p.product_id
+        JOIN seller s ON p.seller_id = s.seller_id
+        WHERE s.seller_id =" . $this->seller_id . " AND o.seller_status = 1";
+        $res = mysqli_query($conn, $sql);
+        $total = 0;
+        if ($res != false) {
+            while ($row = $res->fetch_assoc()) {
+                $total += $row['price'];
+            }
+        }
+        return $total;
+    }
+    public function getAvrating()
+    {
+        require 'config.php';
+        $sql = "SELECT rating FROM product 
+                WHERE seller_id = " . $this->seller_id . " ";
+        $res = mysqli_query($conn, $sql);
+        $num_rows = mysqli_num_rows($res);
+        $total = 0;
+        if ($res != false) {
+            while ($row = $res->fetch_assoc()) {
+                $total += $row['rating'];
+            }
+            if($total != 0){
+                $total /= $num_rows;
+                return $total;
+            }else{
+                return 0;
+            }
+            
+        }
+        return $total;
+        
+    }
+
 
 }
 

@@ -62,6 +62,7 @@ if (isset($_SESSION['customer_id']) && isset($_SESSION['email'])) {
                                 echo '<span class="fa fa-star"></span>';
                             }
                         }
+                        echo "<span> (" . User::getTotalRatings($row['product_id']) . ")</span>";
                         echo '</p>
                     <p class="price">' . $row['price'] . ' Birr</p>
                     </div>';

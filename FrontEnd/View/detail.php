@@ -1,5 +1,4 @@
 <?php
-// require_once '../../BackEnd/Session/usersession.php';
 require_once '../../BackEnd/User.php';
 if (isset($_SESSION['customer_id']) && isset($_SESSION['email'])) {
     $user = new User($_SESSION['customer_id'], $_SESSION['email']);
@@ -74,7 +73,9 @@ if (isset($_SESSION['customer_id']) && isset($_SESSION['email'])) {
                             } else {
                                 echo '<span class="fa fa-star"></span>';
                             }
+                            
                         }
+                        echo "<span> (".User::getTotalRatings($prid).")</span>";
                         ?>
                     </p>
                 </div>

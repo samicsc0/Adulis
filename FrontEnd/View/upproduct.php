@@ -3,6 +3,7 @@
 <?php
 require_once '../../BackEnd/Session/sellersession.php';
 require_once '../../BackEnd/Seller.php';
+$seller = new Seller($_SESSION['customer_id'], $_SESSION['email'],$_SESSION['seller_id']);
 ?>
 
 <head>
@@ -26,7 +27,6 @@ require_once '../../BackEnd/Seller.php';
 
             require 'inputcleaner.php';
             $prid = $_GET['pid'];
-            $seller = new Seller($_SESSION['customer_id'], $_SESSION['email']);
             $row = Seller::getProduct($prid);
             ?>
             <div class="col-1">

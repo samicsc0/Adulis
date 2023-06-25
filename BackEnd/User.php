@@ -8,12 +8,12 @@ class User
         $this->user_id = $user_id;
         $this->email = $email;
     }
-    public static function register($first_name, $last_name, $phone_number, $email, $address, $password)
+    public static function register($first_name, $last_name, $phone_number, $email, $address, $password, $role)
     {
         require 'config.php';
         $sql = "INSERT INTO customer (first_name, last_name, phone_number, email, address, password, role) VALUES (?, ?, ?, ?, ?, ?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssss", $first_name, $last_name, $phone_number, $email, $address, $password, 'buyer');
+        $stmt->bind_param("sssssss", $first_name, $last_name, $phone_number, $email, $address, $password, $role);
         if ($stmt->execute()) {
             echo "Registration Successful!";
         } else {
@@ -94,6 +94,7 @@ class User
     public static function login($email, $password)
     {
         require 'config.php';
+        require 'Seller.php';
         $sql = "SELECT * FROM customer WHERE email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $email);
@@ -118,6 +119,7 @@ class User
                         $_SESSION['customer_id'] = $row['customer_id'];
                         $_SESSION['email'] = $row['email'];
                         $_SESSION['role'] = 'seller';
+                        $_SESSION['seller_id'] = Seller::getSellerId($row['customer_id']);
                         header("location: ../../FrontEnd/View/bizmanagment.php");
                         exit();
                     } else if ($row['role'] == 'admin') {
@@ -297,7 +299,7 @@ class User
         require 'config.php';
         $sql = "SELECT o.order_id, o.product_id, o.quantity, o.price, o.buyer_status, p.product_name FROM orders o 
         JOIN product p ON o.product_id = p.product_id 
-        WHERE o.buyer_status = 0 and o.customer_id = $this->user_id";
+        WHERE o.customer_id = $this->user_id ORDER BY o.buyer_status ASC";
         $res = mysqli_query($conn, $sql);
         return $res;
     }
@@ -328,7 +330,7 @@ class User
         $sql_update = "UPDATE product SET rating = $av WHERE product_id = $prid";
         mysqli_query($conn, $sql_update);
     }
-    public function getTotalRatings($prid)
+    public static function getTotalRatings($prid)
     {
         require 'config.php';
         $sql = "SELECT rating FROM ratings WHERE product_id  = $prid";

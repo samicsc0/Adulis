@@ -39,10 +39,14 @@ $user = new User($_SESSION['customer_id'], $_SESSION['email']);
                         while ($row = $hist_res->fetch_assoc()) {
                             echo '<div class="hist-row">
                                 <p class="title">' . $row['product_name'] . '</p>
-                                <p class="quan">' . $row['quantity'] . '</p>
-                                <p class="price">' . $row['price'] . '</p>
-                                <a href="../../BackEnd/Services/deliveryupdate.php?id=' . $row['order_id'] . '" class="rate-btn">Mark as Delivered</a>
-                                <a href="rateproduct.php?id=' . $row['product_id'] . '"class="rate-btn">Rate Product</a>
+                                <p class="quan">' . $row['quantity'] . ' items</p>
+                                <p class="price">' . $row['price'] . ' Birr</p>';
+                                if($row['buyer_status'] == 0){
+                                    echo '<a href="../../BackEnd/Services/deliveryupdate.php?id=' . $row['order_id'] . '" class="rate-btn">Mark as Delivered</a>';
+                                }else{
+                                    echo '<p>Delivered</p>';
+                                }
+                                echo '<a href="rateproduct.php?id=' . $row['product_id'] . '"class="rate-btn">Rate Product</a>
                                 </div>';
                         }
                         ?>
@@ -98,6 +102,7 @@ $user = new User($_SESSION['customer_id'], $_SESSION['email']);
                             <input type="password" name="conpass" id="" placeholder="Confirm Password" required>
                             <input type="submit" name="submit-2" value="Update">
                             <?php
+                            require 'inputcleaner.php';
                             if (isset($_POST['submit-2'])) {
                                 $oldPass = $_POST['oldpass'];
                                 $newPass = $_POST['newpass'];
