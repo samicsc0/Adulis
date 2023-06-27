@@ -7,6 +7,7 @@ $user = new User($_SESSION['customer_id'], $_SESSION['email']);
 $userinfo = $user->getUserInfo();
 $row = $userinfo->fetch_assoc();
 $cart = new Cart($user->user_id);
+$serPrice = $user->getServicePrice();
 
 $data = array(
     'firstname' => $row['first_name'],
@@ -30,7 +31,7 @@ if ($data['amount'] != 0) {
         $amount = $data['amount'];
         $cart_id = $cart->returnCartId();
         $sql = "INSERT INTO invoice (customer_id,cart_id, total_price)
-                            VALUES($user->user_id,$cart_id,$amount)";
+                            VALUES($user->user_id,$cart_id,$amount + $serPrice)";
         if(mysqli_query($conn,$sql)){
             $user->order($cart_id);
             $cart->close_cart($cart_id);

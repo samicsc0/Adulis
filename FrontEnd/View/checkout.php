@@ -45,6 +45,10 @@ $cart = new Cart($user->user_id);
                         <p class="tot-title">Total Price</p>
                         <p class="total-price"><?=$_SESSION['total_price'];?> Birr</p>
                     </div>
+                    <div class="row-1">
+                        <p class="tot-title">Service Price</p>
+                        <p class="total-price"><?=$user->getServicePrice()?> Birr</p>
+                    </div>
                     <div class="row-2">
                         <a href="../../BackEnd/Services/finishordering.php" class="pay-btn">Process Payment</a>
                     </div>

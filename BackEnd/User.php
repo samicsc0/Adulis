@@ -375,5 +375,12 @@ class User
         mysqli_query($conn, $sql);
         header('location: ');
     }
+    public function getServicePrice(){
+        require 'config.php';
+        $sql = "SELECT price FROM delivery_price WHERE id = 1";
+        $res = mysqli_query($conn,$sql);
+        $row = $res->fetch_assoc();
+        return $row['price'];
+    }
 }
 ?>

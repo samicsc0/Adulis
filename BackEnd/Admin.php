@@ -36,7 +36,7 @@ class Admin extends User
     public static function listBuyers()
     {
         require 'config.php';
-        $sql = "SELECT first_name, last_name, phone_number, address, acct_status
+        $sql = "SELECT customer_id, first_name, last_name, phone_number, email, acct_status
         FROM customer
         WHERE role = 'buyer' ";
         $result = mysqli_query($conn, $sql);

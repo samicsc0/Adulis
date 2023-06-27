@@ -65,7 +65,8 @@ require 'inputcleaner.php';
                         aria-hidden="true"></i> &nbsp; Edit Profile</a>
                 <a class="menu-item" id="pss-btn" onclick="select('pss-btn','opt-6')"><i class="fa fa-key"
                         aria-hidden="true"></i>&nbsp; Change Password</a>
-                <a href="../../BackEnd/Services/logout.php" class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
+                <a href="../../BackEnd/Services/logout.php" class="menu-item"> <i
+                        class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
             </div>
             <div class="opt-container">
                 <!-- Second Option -->
@@ -100,12 +101,12 @@ require 'inputcleaner.php';
                             echo '<div class="seller">
                                 <p class="full_name">' . $row['first_name'] . ' ' . $row['last_name'] . '</p>
                                 <p class="phno">' . $row['phone_number'] . '</p>
-                                <p class="location">' . $row['address'] . '</p>
+                                <p class="location">' . $row['email'] . '</p>
                                 <p class="deactive">';
                             if ($row['acct_status'] == 1) {
-                                echo '<a href="../../BackEnd/deactivate.php">Deactivate Account</a>';
+                                echo '<a href="../../BackEnd/Services/accountmanager.php?req=deac&id=' . $row['customer_id'] . '">Deactivate Account</a>';
                             } else {
-                                echo '<a href="../../BackEnd/activate.php">Activate Account</a>';
+                                echo '<a href="../../BackEnd/Services/accountmanager.php?req=act&id=' . $row['customer_id'] . '">Activate Account</a>';
                             }
                             echo '</p></div>';
                         }
