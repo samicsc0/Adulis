@@ -27,7 +27,7 @@ Adulis is a web application that allows sellers to list their items and enables 
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/yourusername/adulis.git`
+1. Clone the repository: `git clone https://github.com/samicsc0/Adulis.git`
 2. Set up the database using the provided SQL script.
 3. Configure the PHP files in the **BackEnd** folder to connect to your MySQL database.
 4. Run the application using a local server (e.g., XAMPP, WAMP) or deploy it on a web hosting service.
