@@ -35,7 +35,3 @@ Adulis is a web application that allows sellers to list their items and enables 
 ## Contributors
 
 - [Samuel Zewde](https://github.com/samicsc0)
-
-Feel free to contribute to this project by creating pull requests or reporting issues.
-
-For more information about the website and its functionalities, please refer to the code files and comments in the repository.
